@@ -1,5 +1,8 @@
 package com.ifanow.CollegeManagement.Controller;
 
+import com.google.gson.Gson;
+import com.ifanow.CollegeManagement.Models.AttendenceInsertModel;
+import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
 import com.ifanow.CollegeManagement.Models.DepartmentModel;
 import com.ifanow.CollegeManagement.Services.DepartmentServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import java.util.List;
 
 @RequestMapping("/api/department")
 public class DepartmentController {
+    Gson gson=new Gson();
     @Autowired
     DepartmentServices departmentServices;
 
@@ -33,42 +37,37 @@ public class DepartmentController {
 
         List<String> listdepartment;
         DepartmentServices deptservice = new DepartmentServices();
-        List<DepartmentModel> Listifa = new ArrayList<>();
-        System.out.println("hello world");
         listdepartment = departmentServices.getDepartment();
         String gsonlistDepartment=departmentServices.convertListtoJson(listdepartment);
         return gsonlistDepartment;
 
     }
-
-
-
     @RequestMapping(path = "/insertDepartment", method = RequestMethod.POST)
     @ResponseBody
-    public int DepartmentInsert(@RequestParam String deptname,@RequestParam String deptHead,@RequestParam String teachersall) throws IOException {
-        //Declaration
-        //int deptIdd=deptId;
-        String deptnamestring = deptname;
-        String deptHeadstring = deptHead;
-        String teachersallstring =teachersall;
-        int count = departmentServices.Insert(deptname,deptHead,teachersall);
+    public String  DepartmentInsert(@RequestBody String departmentmodel) throws IOException {
+        DepartmentModel deptmodel=gson.fromJson(departmentmodel, DepartmentModel.class);
+
+        String deptname = deptmodel.getDepartmentName();
+        String depthead=deptmodel.getDepartmentHead();
+        String teachersall=deptmodel.getTeachersAll();
+        departmentServices.Insert(deptname,depthead,teachersall);
+        String count =gson.toJson("Data Successfully Inserted..No of Rows="+departmentServices.Insert(deptname,depthead,teachersall));
         return count;
     }
-
-
-
-
-
     @RequestMapping(path = "/updateDepartment", method = RequestMethod.PUT)
     @ResponseBody
-    public int updateDepartment(@RequestParam int deptId,@RequestParam String deptname,@RequestParam String deptHead,@RequestParam String teachersall) throws IOException
+    public String updateDepartment(@RequestBody String updatedepartment) throws IOException
     {
-        int deptIdstring = deptId;
-        String deptnamestring = deptname;
-        String deptHeadstring = deptHead;
-        String teachersallstring = teachersall;
-        int count = departmentServices.update(deptId,deptname,deptHead,teachersall);
-        return count;
+        int updatedRow=0;
+        Gson gson=new Gson();
+        DepartmentModel deptmodel=gson.fromJson(updatedepartment,DepartmentModel.class);
+        int deptId=deptmodel.getDepartmentId();
+        String deptname=deptmodel.getDepartmentName();
+        String deptHead=deptmodel.getDepartmentHead();
+        String teachersall=deptmodel.getTeachersAll();
+
+        updatedRow=departmentServices.update(deptId,deptname,deptHead,teachersall);
+        return gson.toJson("Successfully..Updated Rows="+String.valueOf(updatedRow));
 
     }
     @RequestMapping(path = "/deleteDepartment", method = RequestMethod.DELETE)

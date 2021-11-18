@@ -7,7 +7,7 @@ public class Queries {
     //----------------------------Student Table----------------------------------------------
     public static String SelectStudent="select * from student";
     public static String InsertStudent = "INSERT INTO `student` (studentId,studentName,departmentName,studentMobileNo,studentAdmissionDate)VALUES (?,?,?,?,?)";
-    public static String UpdateStudent ="UPDATE `student` SET studentName = ? WHERE studentId = ?";
+    public static String UpdateStudent ="UPDATE `student` SET studentName = ?, departmentName = ? ,studentMobileNo=?,studentAdmissionDate=? WHERE studentId = ?";
     public static String DeleteStudent=  "delete from student where studentId=(?);";
     public static String conutStudent=" select count(*) as total from student";
 
@@ -31,5 +31,14 @@ public class Queries {
     public static String deleteAttendence="DELETE FROM `attendence`WHERE srNo=(?);";
     public static String updateAttendence="UPDATE `attendence`SET`studentName` = (?) ,`department` = (?),`loginTime` = (?),`logoutTime` = (?),`attendancePercentage`=(?) WHERE `srNo`= (?);";
     public static String percentageAttendenceQuery="SELECT studentName FROM `attendence`WHERE studentId= ?;";
+
+
+    public static final String selectQueryLogin="select * from register";
+    public static final String updateQueryLogin="update register set userName =?,password=? where userId=?";
+    public static final String insertQueryRegister= "INSERT INTO register(userName,email,password) VALUES ((?),(?),(?))";
+    public static final String deleteQueryLogin="delete from register where userId=?";
+    public static final String totalcountLogin="select count(*) as total from register";
+    public static final String findRegisterUser="select * from register where email=(?) and password=(?)";
+
 
 }

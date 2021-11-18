@@ -91,7 +91,7 @@ public class studentServices {
 
     }
 
-    public int UpdateStudent(int studentId,String studentName){
+    public int UpdateStudent(int studentId,String studentName,String departmentName,String studentMobileNo,String studentAddmissionDate){
 
         int counterupdate=0;
         try{
@@ -99,7 +99,10 @@ public class studentServices {
             stmt=connection.createStatement();
             pstmt=connection.prepareStatement(queries.UpdateStudent);
             pstmt.setString(1,studentName);
-            pstmt.setInt(2,studentId);
+            pstmt.setString(2,departmentName);
+            pstmt.setString(3,studentMobileNo);
+            pstmt.setString(4,studentAddmissionDate);
+            pstmt.setInt(5,studentId);
             counterupdate=pstmt.executeUpdate();
             System.out.println("updated sucessfully");
             connection.close();
