@@ -49,7 +49,7 @@ public class LibraryController {
         System.out.println(libraryUpdateDetail);
         Gson gson = new Gson();
         LibraryModel libraryModel = gson.fromJson(libraryUpdateDetail, LibraryModel.class);
-        int srNo = libraryModel.getStudentId();
+        int srNo = libraryModel.getSrNo();
         int numberOfBook = libraryModel.getNumberOfBook();
         String studentName = libraryModel.getStudentName();
         String bookName = libraryModel.getBookName();

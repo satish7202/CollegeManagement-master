@@ -14,13 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-
-@RequestMapping("/api/department")
 public class DepartmentController {
     Gson gson=new Gson();
     @Autowired
     DepartmentServices departmentServices;
-
+    @CrossOrigin("localhost:4200")
     @RequestMapping(path = "/getDepartmentCount", method = RequestMethod.GET)
     @ResponseBody
     public int getdepartmentcount()
@@ -29,7 +27,7 @@ public class DepartmentController {
         return totaldepartment;
     }
 
-
+    @CrossOrigin("localhost:4200")
     @RequestMapping(path = "/getDepartment", method = RequestMethod.GET)
     @ResponseBody
 
@@ -42,6 +40,7 @@ public class DepartmentController {
         return gsonlistDepartment;
 
     }
+    @CrossOrigin("localhost:4200")
     @RequestMapping(path = "/insertDepartment", method = RequestMethod.POST)
     @ResponseBody
     public String  DepartmentInsert(@RequestBody String departmentmodel) throws IOException {
@@ -54,6 +53,7 @@ public class DepartmentController {
         String count =gson.toJson("Data Successfully Inserted..No of Rows="+departmentServices.Insert(deptname,depthead,teachersall));
         return count;
     }
+    @CrossOrigin("localhost:4200")
     @RequestMapping(path = "/updateDepartment", method = RequestMethod.PUT)
     @ResponseBody
     public String updateDepartment(@RequestBody String updatedepartment) throws IOException
@@ -70,6 +70,7 @@ public class DepartmentController {
         return gson.toJson("Successfully..Updated Rows="+String.valueOf(updatedRow));
 
     }
+    @CrossOrigin("localhost:4200")
     @RequestMapping(path = "/deleteDepartment", method = RequestMethod.DELETE)
     @ResponseBody
     public int deleteDepartment(@RequestParam("deptId") int deptId )throws IOException

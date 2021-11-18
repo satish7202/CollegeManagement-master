@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class AttendenceController {
     Gson gson=new Gson();
     @Autowired
@@ -55,7 +54,6 @@ public class AttendenceController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(path = "/attendence/update")
     public String attendenceUpdate(@RequestBody String updateData) throws IOException {
-
         //Constant Intiallization
         int updatedRow=0;
         Gson gson=new Gson();
@@ -71,5 +69,11 @@ public class AttendenceController {
         return gson.toJson("Successfully..Updated Rows="+String.valueOf(updatedRow));
 
 
+    }
+
+    @PostMapping(path = "/attendence/insertBatch")
+    public void setAttendenceBatch(@RequestBody AttendenceInsertModel[] attendenceBatch)
+    {
+        System.out.println(attendenceBatch);
     }
 }
