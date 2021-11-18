@@ -34,7 +34,7 @@ public class DepartmentController {
         List<String> listdepartment;
         DepartmentServices deptservice = new DepartmentServices();
         List<DepartmentModel> Listifa = new ArrayList<>();
-
+        System.out.println("hello world");
         listdepartment = departmentServices.getDepartment();
         String gsonlistDepartment=departmentServices.convertListtoJson(listdepartment);
         return gsonlistDepartment;
