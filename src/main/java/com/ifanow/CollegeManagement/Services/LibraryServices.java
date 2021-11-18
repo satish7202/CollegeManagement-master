@@ -128,7 +128,7 @@ public class LibraryServices {
         return updated_row;
     }
     public int LibraryDetails(){
-        int count = 0;
+        int count = 1;
         try{
             connection = dbConnection.getconnect();
 
