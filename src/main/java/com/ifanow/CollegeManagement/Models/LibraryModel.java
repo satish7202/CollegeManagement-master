@@ -86,8 +86,19 @@ public class LibraryModel {
         this.librarian = librarian;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "LibraryModel{" +
+                "srNo=" + srNo +
+                ", studentId=" + studentId +
+                ", numberOfBook=" + numberOfBook +
+                ", studentName='" + studentName + '\'' +
+                ", bookName='" + bookName + '\'' +
+                ", issueDate='" + issueDate + '\'' +
+                ", returnDate='" + returnDate + '\'' +
+                ", librarian='" + librarian + '\'' +
+                '}';
+    }
 }
 
 

@@ -1,16 +1,14 @@
 package com.ifanow.CollegeManagement.Services;
 
-import com.google.gson.Gson;
 import com.ifanow.CollegeManagement.Connection.DbConnection;
 import com.ifanow.CollegeManagement.Models.LibraryModel;
 import com.ifanow.CollegeManagement.Query.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 @Component
 public class LibraryServices {
@@ -24,13 +22,14 @@ public class LibraryServices {
 
 
 
-    public int saveLibraryDetails(int studentId, String studentName, String bookName, String issueDate, String returnDate, int numberOfBook, String librarian){
-        int show = 0;
+    public int[] saveLibraryDetails(int studentId, String studentName, String bookName, String issueDate, String returnDate, int numberOfBook, String librarian){
+        int show[] = new int[0];
         try {
 
             connection = dbConnection.getconnect();
 
             PreparedStatement stmt = connection.prepareStatement(queries.storeLibraryData);
+
             libraryModel.setStudentId(studentId);
             libraryModel.setStudentName(studentName);
             libraryModel.setBookName(bookName);
@@ -38,6 +37,7 @@ public class LibraryServices {
             libraryModel.setReturnDate(returnDate);
             libraryModel.setNumberOfBook(numberOfBook);
             libraryModel.setLibrarian(librarian);
+
             stmt.setInt(1,libraryModel.getStudentId());
             stmt.setString(2,libraryModel.getStudentName() );
             stmt.setString(3,libraryModel.getBookName());
@@ -45,7 +45,8 @@ public class LibraryServices {
             stmt.setString(5,libraryModel.getReturnDate());
             stmt.setInt(6,libraryModel.getNumberOfBook());
             stmt.setString(7,libraryModel.getLibrarian());
-            show = stmt.executeUpdate();
+            stmt.addBatch();
+            show = stmt.executeBatch();
             System.out.println("Records inserted successfully");
 
             connection.close();
@@ -81,15 +82,18 @@ public class LibraryServices {
         return libraryModelList;
     }
 
-    public int deleteLibraryDetail(int srNo)
+    public int[] deleteLibraryDetail(LibraryModel[] srNo)
     {
-        int rowsAffected=0;
+        int[] rowsAffected= new int[0];
         try {
             connection = dbConnection.getconnect();
             Statement stmt = connection.createStatement();
             PreparedStatement ps = connection.prepareStatement(queries.deleteLibraryData);
-            ps.setInt(1,srNo);
-            rowsAffected = ps.executeUpdate();
+            for(int i=0;i<srNo.length;i++) {
+                ps.setInt(1,srNo[i].srNo);
+                ps.addBatch();
+            }
+            rowsAffected = ps.executeBatch();
             System.out.println("Successfully record deleted");
             showAllLibraryDetail();
             connection.close();
@@ -144,6 +148,69 @@ public class LibraryServices {
             e.printStackTrace();
         }
         return count;
+    }
+    public int[] saveMultiLibraryDetails(LibraryModel[] libraryInsertDetail){
+        int show[] = new int[0];
+        try {
+
+            connection = dbConnection.getconnect();
+            PreparedStatement stmt = connection.prepareStatement(queries.storeLibraryData);
+            for(int i=0;i<libraryInsertDetail.length;i++) {
+                stmt.setInt(1, libraryInsertDetail[i].getStudentId());
+                stmt.setString(2, libraryInsertDetail[i].getStudentName());
+                stmt.setString(3, libraryInsertDetail[i].getBookName());
+                stmt.setString(4, libraryInsertDetail[i].getIssueDate());
+                stmt.setString(5, libraryInsertDetail[i].getReturnDate());
+                stmt.setInt(6, libraryInsertDetail[i].getNumberOfBook());
+                stmt.setString(7, libraryInsertDetail[i].getLibrarian());
+                stmt.addBatch();
+            }
+            show = stmt.executeBatch();
+            System.out.println("Records inserted successfully");
+
+            connection.close();
+            System.out.println("Connection closed");
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return show;
+    }
+    public int[] updateMultipleLibraryDetail(LibraryModel[] libraryUpdateDetail){
+        int updated_row[] = new int[0];
+        try {
+            connection = dbConnection.getconnect();
+            PreparedStatement ps = connection.prepareStatement(queries.updateLibraryData);
+            for(int i=0;i<libraryUpdateDetail.length;i++){
+                ps.setString(1,libraryUpdateDetail[i].studentName);
+                ps.setString(2,libraryUpdateDetail[i].bookName);
+                ps.setString(3,libraryUpdateDetail[i].issueDate);
+                ps.setString(4,libraryUpdateDetail[i].returnDate);
+                ps.setInt(5,libraryUpdateDetail[i].numberOfBook);
+                ps.setString(6,libraryUpdateDetail[i].librarian);
+                ps.setInt(7,libraryUpdateDetail[i].srNo);
+                ps.addBatch();
+            }
+            updated_row = ps.executeBatch();
+            System.out.println("Records inserted successfully");
+
+            connection.close();
+            System.out.println("Connection closed");
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return updated_row;
+    }
+    public String encodefunc(String e){
+        String encode = Base64.getEncoder().encodeToString(e.getBytes());
+        return encode;
+    }
+    public String decodefunc(String d) {
+        byte[] decodedBytes = Base64.getDecoder().decode(d);
+        String decodedString = new String(decodedBytes);
+        System.out.println(decodedString);
+        return decodedString;
     }
 }
 
