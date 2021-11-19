@@ -56,6 +56,6 @@ public class AttendenceController {
     public String setAttendenceBatch(@RequestBody AttendenceInsertModel[] attendenceBatch)
     {
         int insertedRows = attendence.attdendenceInsertBatch(attendenceBatch);
-        return "InsertedRows="+insertedRows;
+        return gson.toJson("InsertedRows="+insertedRows);
     }
 }
