@@ -65,7 +65,7 @@ public class studentServices {
         int counterinsert=0;
         try{
             connection=dbConnection.getconnect();
-           // stmt=con.createStatement();
+
             pstmt=connection.prepareStatement(queries.InsertStudent);
             studentModel.setStudentId(studentId);
             studentModel.setStudentName(studentName);
