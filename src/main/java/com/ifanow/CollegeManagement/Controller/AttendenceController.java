@@ -19,30 +19,20 @@ public class AttendenceController {
     @PostMapping(value = "/attendence/insert")
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
-    public String AttendenceInsert(@RequestBody String attendModel) throws IOException {
+    public String AttendenceInsert(@RequestBody AttendenceInsertModel attendModel) throws IOException {
         System.out.println(attendModel);
-        //Declaration
-
-        AttendenceInsertModel attendenceinsertmodel=gson.fromJson(attendModel, AttendenceInsertModel.class);
-        int sid = attendenceinsertmodel.getStudentId();
-        String sName = attendenceinsertmodel.getStudentName();
-        String department = attendenceinsertmodel.getDepartment();
-        String loginTime = attendenceinsertmodel.getLoginTime();
-        String logoutTime = attendenceinsertmodel.getLogoutTime();
-        //System.out.println();
-        int attendencePercentage=(int)attendence.attendencePercentage(sid);
-        //Constant Intiallization
-        String count =gson.toJson("Data Successfully Inserted..No of Rows="+attendence.insertAttendence(sid,sName,department,loginTime,logoutTime,attendencePercentage));
-        return count;
+        int attendencePercentage=(int)attendence.attendencePercentage(attendModel.getStudentId());
+        int count =attendence.insertAttendence(attendModel,attendencePercentage);
+        return "Row Inserted Succesfully="+count;
     }
-    //Select Statement
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(path = "/attendence")
     public String attendenceHome() throws IOException {
-        //Declaration
         Gson gson=new Gson();
         String listModel = gson.toJson(attendence.selectAttendence());
-        return listModel;
+        String encodedList=attendence.Encode(listModel);
+        String decodedlist=attendence.Decode(encodedList);
+        return decodedlist;
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(path = "/attendence/delete")
@@ -53,27 +43,19 @@ public class AttendenceController {
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(path = "/attendence/update")
-    public String attendenceUpdate(@RequestBody String updateData) throws IOException {
-        //Constant Intiallization
+    public String attendenceUpdate(@RequestBody AttendenceUpdateModel attendenceupdatemodel) throws IOException {
         int updatedRow=0;
-        Gson gson=new Gson();
-        AttendenceUpdateModel attendenceupdatemodel=gson.fromJson(updateData,AttendenceUpdateModel.class);
-        int sId=attendenceupdatemodel.getStudentId();
-        int attendencePercentage= (int)attendence.attendencePercentage(sId);
-        int srNo=attendenceupdatemodel.getSrNo();
-        String studentName=attendenceupdatemodel.getStudentName();
-        String department = attendenceupdatemodel.getDepartment();
-        String loginTime=attendenceupdatemodel.getLoginTime();
-        String logoutTime=attendenceupdatemodel.getLogoutTime();
-        updatedRow=attendence.attendenceUpdate(srNo,studentName,department,loginTime,logoutTime,attendencePercentage);
+        int attendencePercentage= (int)attendence.attendencePercentage(attendenceupdatemodel.getStudentId());
+        updatedRow=attendence.attendenceUpdate(attendenceupdatemodel,attendencePercentage);
         return gson.toJson("Successfully..Updated Rows="+String.valueOf(updatedRow));
 
 
     }
-
+    @CrossOrigin("localhost:4200")
     @PostMapping(path = "/attendence/insertBatch")
-    public void setAttendenceBatch(@RequestBody AttendenceInsertModel[] attendenceBatch)
+    public String setAttendenceBatch(@RequestBody AttendenceInsertModel[] attendenceBatch)
     {
-        System.out.println(attendenceBatch);
+        int insertedRows = attendence.attdendenceInsertBatch(attendenceBatch);
+        return "InsertedRows="+insertedRows;
     }
 }
