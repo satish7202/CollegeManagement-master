@@ -1,6 +1,7 @@
 package com.ifanow.CollegeManagement.Controller;
 
 import com.google.gson.Gson;
+import com.ifanow.CollegeManagement.Models.AttendenceDeleteModel;
 import com.ifanow.CollegeManagement.Models.AttendenceInsertModel;
 import com.ifanow.CollegeManagement.Models.AttendenceModel;
 import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
@@ -58,4 +59,15 @@ public class AttendenceController {
         int insertedRows = attendence.attdendenceInsertBatch(attendenceBatch);
         return gson.toJson("InsertedRows="+insertedRows);
     }
+//    @CrossOrigin("localhost:4200")
+//    @DeleteMapping(path = "/attendence/DeleteBatch")
+   public String attendenceDelete(@RequestBody String attendenceDeleteModel )
+  {
+
+//        System.out.println(attendenceDeleteModel);
+//        String m=gson.fromJson(attendenceDeleteModel,String.class);
+//        //int deletedRows = attendence.deleteBatch(attendenceDeleteModel);
+//        //return gson.toJson("DeletedRows="+deletedRows);
+       return "";
+  }
 }

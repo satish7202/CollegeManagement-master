@@ -1,6 +1,7 @@
 package com.ifanow.CollegeManagement.Services;
 
 import com.ifanow.CollegeManagement.Connection.DbConnection;
+import com.ifanow.CollegeManagement.Models.AttendenceDeleteModel;
 import com.ifanow.CollegeManagement.Models.AttendenceInsertModel;
 import com.ifanow.CollegeManagement.Models.AttendenceModel;
 import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
@@ -9,6 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -206,5 +212,32 @@ public class AttendenceServices {
         Base64.Decoder decoder = Base64.getDecoder();
         String output = new String(decoder.decode(input));
         return output;
+    }
+//    public int deleteBatch(AttendenceDeleteModel[] attendenceDeleteModel)
+//    {
+//        int[] deleted_row = new int[0];
+//        try {
+//            connection= dbconnection.getconnect();
+//            //Statement stmt = con.createStatement();
+//            ps = connection.prepareStatement(Queries.deleteBatchAttendence);
+//            for (AttendenceDeleteModel a:attendenceDeleteModel) {
+//                ps.setInt(1, a.getSrNo());
+//                ps.addBatch();
+//            }
+//            deleted_row = ps.executeBatch();
+//
+//
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println("Errorr."+e);
+//        }
+//        return deleted_row.length;
+//    }
+    public String callOtherApi(String url) throws IOException, InterruptedException {
+        HttpRequest request =  HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
+        HttpClient client=HttpClient.newBuilder().build();
+        HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        return String.valueOf(response);
     }
 }
