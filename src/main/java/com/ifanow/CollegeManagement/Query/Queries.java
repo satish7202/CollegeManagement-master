@@ -31,6 +31,7 @@ public class Queries {
     public static String deleteAttendence="DELETE FROM `attendence`WHERE srNo=(?);";
     public static String updateAttendence="UPDATE `attendence`SET`studentName` = (?) ,`department` = (?),`loginTime` = (?),`logoutTime` = (?),`attendancePercentage`=(?) WHERE `srNo`= (?);";
     public static String percentageAttendenceQuery="SELECT studentName FROM `attendence`WHERE studentId= ?;";
+    public static String insertBatchAttendence="INSERT INTO attendence(`studentId`,`studentName`, `department`,`loginTime`,`logoutTime`,`attendancePercentage`)VALUES((?),(?),(?),(?),(?),(?))";
 
 
     public static final String selectQueryLogin="select * from register";

@@ -3,16 +3,19 @@ package com.ifanow.CollegeManagement.Services;
 import com.ifanow.CollegeManagement.Connection.DbConnection;
 import com.ifanow.CollegeManagement.Models.AttendenceInsertModel;
 import com.ifanow.CollegeManagement.Models.AttendenceModel;
+import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
 import com.ifanow.CollegeManagement.Query.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 @Component
 public class AttendenceServices {
@@ -20,9 +23,9 @@ public class AttendenceServices {
     DbConnection dbconnection;
     Connection connection;
     PreparedStatement ps;
-
+    int[] batchCount;
     int count=0;
-    public int insertAttendence(int sid,String sName,String department,String loginTime,String logoutTime,float attendencePercentage)
+    public int insertAttendence(AttendenceInsertModel attendenceInsertModel,float attendencePercentage)
     {
         try {
 
@@ -31,11 +34,11 @@ public class AttendenceServices {
             ps = connection.prepareStatement(Queries.insertAttendence);
             //Database Name Pass in dbName present in constant class
             //ps.setString(1,constant.dbName);
-            ps.setInt(1,sid);
-            ps.setString(2,sName);
-            ps.setString(3,department);
-            ps.setString(4,loginTime);
-            ps.setString(5,logoutTime);
+            ps.setInt(1,attendenceInsertModel.getStudentId());
+            ps.setString(2,attendenceInsertModel.getStudentName());
+            ps.setString(3,attendenceInsertModel.getDepartment());
+            ps.setString(4,attendenceInsertModel.getLoginTime());
+            ps.setString(5,attendenceInsertModel.getLogoutTime());
             ps.setFloat(6,attendencePercentage);
             count = ps.executeUpdate ();
             System.out.println("Inserted Rows "+count);
@@ -101,19 +104,19 @@ public class AttendenceServices {
         }
         return deleted_row;
     }
-    public int attendenceUpdate(int srNo,String sName,String department,String loginTime,String logoutTime,int attdencePercentage)
+    public int attendenceUpdate(AttendenceUpdateModel attendenceUpdateModel, int attdencePercentage)
     {
         int updated_row=0;
         try {
             connection= dbconnection.getconnect();
             Statement stmt = connection.createStatement();
             ps = connection.prepareStatement(Queries.updateAttendence);
-            ps.setString(1,sName);
-            ps.setString(2,department);
-            ps.setString(3,loginTime);
-            ps.setString(4,logoutTime);
+            ps.setString(1,attendenceUpdateModel.getStudentName());
+            ps.setString(2,attendenceUpdateModel.getDepartment());
+            ps.setString(3,attendenceUpdateModel.getLoginTime());
+            ps.setString(4,attendenceUpdateModel.getLogoutTime());
             ps.setInt(5,attdencePercentage);
-            ps.setInt(6,srNo);
+            ps.setInt(6,attendenceUpdateModel.getStudentId());
             updated_row = ps.executeUpdate();
 
         }
@@ -123,19 +126,20 @@ public class AttendenceServices {
         }
         return updated_row;
     }
-    public float attendencePercentage(int sId)
+    public int attendencePercentage(int sId)
     {
         //attendenceModel[] model=new attendenceModel[100];
         //List<attendenceModel> listModel = new ArrayList<>();
         float length=0,noDays=31;
         float attendencePercentage=0;
+        PreparedStatement psmt;
         try {
 
             connection= dbconnection.getconnect();
-            Statement stmt = connection.createStatement();
-            ps = connection.prepareStatement(Queries.percentageAttendenceQuery);
-            ps.setInt(1,sId);
-            ResultSet rs = ps.executeQuery();
+           // Statement stmt = connection.createStatement();
+            psmt = connection.prepareStatement(Queries.percentageAttendenceQuery);
+            psmt.setInt(1,sId);
+            ResultSet rs = psmt.executeQuery();
             while (rs.next()) {
 
                 length++;
@@ -148,12 +152,59 @@ public class AttendenceServices {
 
             }
             attendencePercentage=length/noDays*100;
-            connection.close();
+           // connection.close();
         }
         catch (Exception e)
         {
             System.out.println("Error..."+e);
         }
-        return attendencePercentage;
+        return (int)attendencePercentage;
+    }
+    public int attdendenceInsertBatch(AttendenceInsertModel[] attendenceInsertModels) {
+        try {
+
+            connection = dbconnection.getconnect();
+            Statement stmt = connection.createStatement();
+           // ps=null;
+            ps = connection.prepareStatement(Queries.insertBatchAttendence);
+            //connection.setAutoCommit(false);
+            for (AttendenceInsertModel a : attendenceInsertModels) {
+                int percentage=(int) attendencePercentage(a.getStudentId());
+                ps.setInt(1,a.getStudentId());
+                ps.setString(2,a.getStudentName());
+                ps.setString(3,a.getDepartment());
+                ps.setString(4,a.getLoginTime());
+                ps.setString(5,a.getLogoutTime());
+                ps.setInt(6,percentage);
+                ps.addBatch();
+            }  //Database Name Pass in dbName present in constant class
+
+             batchCount = ps.executeBatch();
+            count=0;
+            for (int i=0;i<batchCount.length;i++)
+            {
+                count++;
+            }
+
+
+                    //connection.close();
+                }
+        catch(Exception e)
+                {
+                    System.out.println("Errorr...in Crud Attendence..." + e);
+                }
+                 return count;
+    }
+    public String Encode(String input)
+    {
+        Base64.Encoder encoder = Base64.getEncoder();
+        String output = encoder.encodeToString(input.getBytes(StandardCharsets.UTF_8));
+        return output;
+    }
+    public String Decode(String input)
+    {
+        Base64.Decoder decoder = Base64.getDecoder();
+        String output = new String(decoder.decode(input));
+        return output;
     }
 }
