@@ -57,7 +57,7 @@ public class DepartmentController {
         String [] teachersAll= deptmodel.getTeachersAll();
         //ArrayList<String>   teachersall=deptmodel.getTeachersAll();
         departmentServices.Insert(deptname,depthead,teachersAll);
-        String count =gson.toJson("Data Successfully Inserted..No of Rows="+departmentServices.Insert(deptname,depthead,teachersAll));
+        String count =gson.toJson("Data Successfully  Inserted..No of Rows="+departmentServices.Insert(deptname,depthead,teachersAll));
         return count;
     }
     @CrossOrigin(origins = " http://localhost:4200")
