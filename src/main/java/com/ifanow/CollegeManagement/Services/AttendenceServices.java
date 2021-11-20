@@ -76,11 +76,6 @@ public class AttendenceServices {
                         rs.getString(6),rs.getInt(7));
                 listModel.add(model[length]);
                 length++;
-//                productmap.put("Product_Id",rs.getString(1));
-//                productmap.put("Product_Name",rs.getString(2));
-//                productmap.put("Product_Rate",Integer.toString(rs.getInt(3)));
-//                productmap.put("Product_Description",rs.getString(4));
-//                productmap.put("Supplier_Id",rs.getString(5));
 
 
             }
@@ -98,7 +93,6 @@ public class AttendenceServices {
         int deleted_row=0;
         try {
             connection= dbconnection.getconnect();
-            //Statement stmt = con.createStatement();
             ps = connection.prepareStatement(Queries.deleteAttendence);
             ps.setInt(1,srNo);
             deleted_row = ps.executeUpdate();
@@ -134,8 +128,7 @@ public class AttendenceServices {
     }
     public int attendencePercentage(int sId)
     {
-        //attendenceModel[] model=new attendenceModel[100];
-        //List<attendenceModel> listModel = new ArrayList<>();
+
         float length=0,noDays=31;
         float attendencePercentage=0;
         PreparedStatement psmt;
@@ -149,16 +142,10 @@ public class AttendenceServices {
             while (rs.next()) {
 
                 length++;
-//                productmap.put("Product_Id",rs.getString(1));
-//                productmap.put("Product_Name",rs.getString(2));
-//                productmap.put("Product_Rate",Integer.toString(rs.getInt(3)));
-//                productmap.put("Product_Description",rs.getString(4));
-//                productmap.put("Supplier_Id",rs.getString(5));
 
 
             }
             attendencePercentage=length/noDays*100;
-           // connection.close();
         }
         catch (Exception e)
         {
@@ -189,7 +176,12 @@ public class AttendenceServices {
             count=0;
             for (int i=0;i<batchCount.length;i++)
             {
-                count++;
+                if (batchCount[i]==1)
+                {
+                    count++;
+                }
+
+
             }
 
 
@@ -213,27 +205,36 @@ public class AttendenceServices {
         String output = new String(decoder.decode(input));
         return output;
     }
-//    public int deleteBatch(AttendenceDeleteModel[] attendenceDeleteModel)
-//    {
-//        int[] deleted_row = new int[0];
-//        try {
-//            connection= dbconnection.getconnect();
-//            //Statement stmt = con.createStatement();
-//            ps = connection.prepareStatement(Queries.deleteBatchAttendence);
-//            for (AttendenceDeleteModel a:attendenceDeleteModel) {
-//                ps.setInt(1, a.getSrNo());
-//                ps.addBatch();
-//            }
-//            deleted_row = ps.executeBatch();
-//
-//
-//        }
-//        catch (Exception e)
-//        {
-//            System.out.println("Errorr."+e);
-//        }
-//        return deleted_row.length;
-//    }
+    public int deleteBatch(int[] attendenceDeleteModel)
+    {
+        int[] deleted_row = new int[0];
+        try {
+            connection= dbconnection.getconnect();
+            //Statement stmt = con.createStatement();
+            ps = connection.prepareStatement(Queries.deleteBatchAttendence);
+            for (int a:attendenceDeleteModel) {
+                ps.setInt(1, a);
+                ps.addBatch();
+            }
+            deleted_row = ps.executeBatch();
+            count=0;
+            for (int i=0;i<deleted_row.length;i++)
+            {
+                if ((deleted_row[i])==1)
+                {
+                    count++;
+                }
+            }
+
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("Errorr."+e);
+        }
+
+        return count;
+    }
     public String callOtherApi(String url) throws IOException, InterruptedException {
         HttpRequest request =  HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
         HttpClient client=HttpClient.newBuilder().build();
