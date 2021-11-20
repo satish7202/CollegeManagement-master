@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface ExternalApi {
 
-	@HTTP(method = "GET", path = "/api/student/select", hasBody = true)
-		Call<String> listRepos(String sId);
+	@HTTP(method = "POST", path = "/api/student/select", hasBody = true)
+		Call<String> listRepos(@Body String sId);
 
 }

@@ -89,7 +89,7 @@ public class StudentController {
         return counter;
     }
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/student/select")
+    @PostMapping("/student/select")
     public  String getstudentsDetails(@RequestParam String sId)
     {
         return "Hellooo";
