@@ -4,14 +4,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.HTTP;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
 public interface ExternalApi {
 
-	@HTTP(method = "POST", path = "/api/student/select", hasBody = true)
+	@POST("/api/student/select")
 		Call<String> listRepos(@Body String sId);
 
 }

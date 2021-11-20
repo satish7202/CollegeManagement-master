@@ -1,6 +1,7 @@
 package com.ifanow.CollegeManagement.Controller;
 
 import com.google.gson.Gson;
+import com.ifanow.CollegeManagement.Models.AttendenceSingleStudent;
 import com.ifanow.CollegeManagement.Services.studentServices;
 import com.ifanow.CollegeManagement.Models.studentModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import springfox.documentation.spring.web.json.Json;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.IOException;
@@ -23,6 +26,7 @@ public class StudentController {
     @Autowired
     studentServices sqloperation;
     List<studentModel> studentmodelsList=new ArrayList<>();
+    Gson gson=new Gson();
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(path = "/showStudentDetails")
@@ -90,9 +94,13 @@ public class StudentController {
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/student/select")
-    public  String getstudentsDetails(@RequestParam String sId)
+    public  String getstudentsDetails(@RequestBody String sId)
     {
-        return "Hellooo";
+       int studentId=Integer.parseInt(sId);
+        AttendenceSingleStudent attendenceSingleStudent = sqloperation.SelectSingleStudent(studentId);
+        System.out.println(attendenceSingleStudent);
+        return gson.toJson(attendenceSingleStudent);
+
     }
 
 

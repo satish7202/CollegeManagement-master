@@ -10,6 +10,7 @@ public class Queries {
     public static String UpdateStudent ="UPDATE `student` SET studentName = ?, departmentName = ? ,studentMobileNo=?,studentAdmissionDate=? WHERE studentId = ?";
     public static String DeleteStudent=  "delete from student where studentId=(?);";
     public static String conutStudent=" select count(*) as total from student";
+    public static String selectSingleStudent="select studentName,departmentName from student Where studentId=(?);";
 
 
     //----------------------------Library Table----------------------------------------------

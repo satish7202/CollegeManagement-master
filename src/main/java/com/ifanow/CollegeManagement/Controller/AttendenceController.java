@@ -74,7 +74,7 @@ public class AttendenceController {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080")
                 .addConverterFactory(ScalarsConverterFactory.create()).build();
         ExternalApi externalApi = retrofit.create(ExternalApi.class);
-        final Call<String> call = externalApi.listRepos("Hello");
+        final Call<String> call = externalApi.listRepos("5");
        String  repos = String.valueOf(call.execute().body());
         return repos;
     }
