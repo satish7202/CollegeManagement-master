@@ -85,7 +85,12 @@ public class StudentController {
         counter=sqloperation.counttotalDetails();
         return counter;
     }
-    //@GetMapping("/student/select")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/student/select")
+    public  String getstudentsDetails(int[] sId)
+    {
+        return "Working";
+    }
 
 
 

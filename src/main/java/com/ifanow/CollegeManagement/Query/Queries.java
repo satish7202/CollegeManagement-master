@@ -13,11 +13,10 @@ public class Queries {
 
     //----------------------------Library Table----------------------------------------------
     public final String getAllLibraryData = "Select * from library";
-    public final String storeLibraryData = "insert into library(studentId,studentName,bookName,issueDate,returnDate,numberOfBook,librarian) values(?,?,?,?,?,?,?)";
-    public final String updateLibraryData = "Update library set studentName=?, bookName = ? ,issueDate=?, returnDate=?, numberOfBook =?,librarian=? where srNo =?";
+    public final String storeLibraryData = "insert into library(studentId,studentName,bookName,issueDate,returnDate,numberOfBook,librarian) values(?,?,?,?,issueDate + INTERVAL 7 DAY,?,?)";
+    public final String updateLibraryData = "Update library set  bookName = ? ,issueDate=?, returnDate=?, numberOfBook =?,librarian=? ,Status = ? where srNo =?";
     public  final String deleteLibraryData  = "DELETE FROM library  WHERE srNo= ? ";
     public final String countLibraryData = "SELECT COUNT(*) AS totalLibraryData FROM library";
-
     ////----------------------------Department Table----------------------------------------------
     public static final String selectQuery="select * from department";
     public static final String updateQueryDepartment="update department set departmentName =?,departmentHead=?,teachersAll=? where departmentId=?";

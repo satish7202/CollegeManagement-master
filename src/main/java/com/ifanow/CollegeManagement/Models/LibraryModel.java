@@ -5,7 +5,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class LibraryModel {
     public int srNo, studentId,numberOfBook;
-    public String studentName,bookName,issueDate,returnDate,librarian;
+    public String studentName;
+    public String bookName;
+    public String issueDate;
+    public String returnDate;
+    public String librarian;
+    public String Status;
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+
 
     public int getSrNo() {
         return srNo;
@@ -75,7 +90,7 @@ public class LibraryModel {
         this.librarian = librarian;
     }
 
-    public LibraryModel(int srNo,int studentId, int numberOfBook, String studentName, String bookName, String issueDate, String returnDate, String librarian) {
+    public LibraryModel(int srNo,int studentId, int numberOfBook, String studentName, String bookName, String issueDate, String returnDate, String librarian,String Status) {
         this.srNo = srNo;
         this.studentId = studentId;
         this.numberOfBook = numberOfBook;
@@ -84,6 +99,7 @@ public class LibraryModel {
         this.issueDate = issueDate;
         this.returnDate = returnDate;
         this.librarian = librarian;
+        this.Status=Status;
     }
 
     @Override
@@ -97,8 +113,23 @@ public class LibraryModel {
                 ", issueDate='" + issueDate + '\'' +
                 ", returnDate='" + returnDate + '\'' +
                 ", librarian='" + librarian + '\'' +
+                ", Status='" + Status + '\'' +
                 '}';
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

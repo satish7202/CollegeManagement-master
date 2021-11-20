@@ -7,6 +7,9 @@ import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
 import com.ifanow.CollegeManagement.Query.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,6 +24,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+ interface SelectStudentDetails
+{
+    @GET("/student/select")
+    Call<String> details(@Query("sId") int sId );
+}
 @Component
 public class AttendenceServices {
     @Autowired
@@ -32,6 +40,8 @@ public class AttendenceServices {
     public int insertAttendence(AttendenceInsertModel attendenceInsertModel,float attendencePercentage)
     {
         try {
+            SelectStudentDetails selectStudentDetails = re
+
 
             connection = dbconnection.getconnect();
             ps = connection.prepareStatement(Queries.insertAttendence);
