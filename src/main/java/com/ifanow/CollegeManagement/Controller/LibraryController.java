@@ -76,6 +76,7 @@ public class LibraryController {
     @CrossOrigin("http://localhost:4200")
     @GetMapping("/totalLibraryDetails")
     public int totalLibrrayDetail(){
+        Gson gson = new Gson();
         int count = 0;
         count = libraryServices.LibraryDetails();
         return count;
@@ -91,7 +92,7 @@ public class LibraryController {
         int[] updated_row= new int[0];
         Gson gson = new Gson();
         updated_row = libraryServices.saveMultiLibraryDetails(libraryInsertDetail);
-        return gson.toJson( updated_row);
+        return "Inserted Successfully";
     }
 
 //    @CrossOrigin("http://localhost:4200")
@@ -101,17 +102,19 @@ public class LibraryController {
 //        libraryServices.updateMultipleLibraryDetail(libraryUpdateDetail);
 //    }
 
+
+    @CrossOrigin("http://localhost:4200")
+    @DeleteMapping("/deleteLibraryDetailsBatch")
+    public void deleteLibraryDetail(@RequestBody int[] srNo) throws IOException {
+        libraryServices.deleteLibraryDetailBatch(srNo);
+    }
+
     @GetMapping("getStudentDetails")
     public List<Object> getStudentDetail(){
         String url = "http://localhost:8080/api/showStudentDetails";
         RestTemplate restTemplate = new RestTemplate();
         Object[] getStudentDetail = restTemplate.getForObject(url,Object[].class);
         return Arrays.asList(getStudentDetail);
-    }
-    @CrossOrigin("http://localhost:4200")
-    @DeleteMapping("/deleteLibraryDetailsBatch")
-    public void deleteLibraryDetail(@RequestBody int[] srNo) throws IOException {
-        libraryServices.deleteLibraryDetailBatch(srNo);
     }
 
 }

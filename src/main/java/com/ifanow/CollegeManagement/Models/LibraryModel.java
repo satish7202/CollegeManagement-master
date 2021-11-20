@@ -11,6 +11,16 @@ public class LibraryModel {
     public String returnDate;
     public String librarian;
     public String Status;
+    public String UpdateTimeStamp;
+    public String getUpdateTimeStamp() {
+        return UpdateTimeStamp;
+    }
+
+    public void setUpdateTimeStamp(String updateTimeStamp) {
+        UpdateTimeStamp = updateTimeStamp;
+    }
+
+
 
     public String getStatus() {
         return Status;
@@ -90,7 +100,7 @@ public class LibraryModel {
         this.librarian = librarian;
     }
 
-    public LibraryModel(int srNo,int studentId, int numberOfBook, String studentName, String bookName, String issueDate, String returnDate, String librarian,String Status) {
+    public LibraryModel(int srNo,int studentId, int numberOfBook, String studentName, String bookName, String issueDate, String returnDate, String librarian,String Status,String UpdateTimeStamp) {
         this.srNo = srNo;
         this.studentId = studentId;
         this.numberOfBook = numberOfBook;
@@ -100,6 +110,7 @@ public class LibraryModel {
         this.returnDate = returnDate;
         this.librarian = librarian;
         this.Status=Status;
+        this.UpdateTimeStamp=UpdateTimeStamp;
     }
 
     @Override
@@ -114,6 +125,7 @@ public class LibraryModel {
                 ", returnDate='" + returnDate + '\'' +
                 ", librarian='" + librarian + '\'' +
                 ", Status='" + Status + '\'' +
+                ", UpdateTimeStamp='" + UpdateTimeStamp + '\'' +
                 '}';
     }
 }

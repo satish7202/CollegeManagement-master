@@ -11,6 +11,7 @@ public class Queries {
     public static String DeleteStudent=  "delete from student where studentId=(?);";
     public static String conutStudent=" select count(*) as total from student";
 
+
     //----------------------------Library Table----------------------------------------------
     public final String getAllLibraryData = "Select * from library";
     public final String storeLibraryData = "insert into library(studentId,studentName,bookName,issueDate,returnDate,numberOfBook,librarian) values(?,?,?,?,issueDate + INTERVAL 7 DAY,?,?)";
