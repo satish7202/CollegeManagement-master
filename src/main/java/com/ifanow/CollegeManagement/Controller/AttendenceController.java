@@ -56,13 +56,13 @@ public class AttendenceController {
         int insertedRows = attendence.attdendenceInsertBatch(attendenceBatch);
         return gson.toJson("InsertedRows="+insertedRows);
     }
-    @CrossOrigin( origins="localhost:4200")
-    @DeleteMapping(path = "/attendence/deleteBatch")
+    @CrossOrigin( origins="http://localhost:4200")
+    @PutMapping(path = "/attendence/deleteBatch")
    public String attendenceDelete(@RequestBody int[] attendenceDeleteModel )
   {
-
+      System.out.println(attendenceDeleteModel);
         int deletedRows = attendence.deleteBatch(attendenceDeleteModel);
-        return "DeletedRows="+deletedRows;
+        return gson.toJson("DeletedRows="+deletedRows);
 
   }
 }
