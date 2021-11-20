@@ -1,14 +1,12 @@
 package com.ifanow.CollegeManagement.Services;
 
 import com.ifanow.CollegeManagement.Connection.DbConnection;
-import com.ifanow.CollegeManagement.Models.AttendenceDeleteModel;
 import com.ifanow.CollegeManagement.Models.AttendenceInsertModel;
 import com.ifanow.CollegeManagement.Models.AttendenceModel;
 import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
 import com.ifanow.CollegeManagement.Query.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -36,10 +34,7 @@ public class AttendenceServices {
         try {
 
             connection = dbconnection.getconnect();
-            //Statement stmt = con.createStatement();
             ps = connection.prepareStatement(Queries.insertAttendence);
-            //Database Name Pass in dbName present in constant class
-            //ps.setString(1,constant.dbName);
             ps.setInt(1,attendenceInsertModel.getStudentId());
             ps.setString(2,attendenceInsertModel.getStudentName());
             ps.setString(3,attendenceInsertModel.getDepartment());
@@ -69,8 +64,6 @@ public class AttendenceServices {
             ResultSet rs = stmt.executeQuery(Queries.selectAttendence);
 
             while (rs.next()) {
-//				System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3)
-//						+ "  " + rs.getString(4) + "  " + rs.getString(5)+"  "+rs.getInt(6));
                 model[length] = new AttendenceModel(rs.getInt(1),rs.getInt(2),
                         rs.getString(3),rs.getString(4),rs.getString(5),
                         rs.getString(6),rs.getInt(7));
@@ -135,7 +128,6 @@ public class AttendenceServices {
         try {
 
             connection= dbconnection.getconnect();
-           // Statement stmt = connection.createStatement();
             psmt = connection.prepareStatement(Queries.percentageAttendenceQuery);
             psmt.setInt(1,sId);
             ResultSet rs = psmt.executeQuery();
@@ -157,10 +149,7 @@ public class AttendenceServices {
         try {
 
             connection = dbconnection.getconnect();
-            Statement stmt = connection.createStatement();
-           // ps=null;
             ps = connection.prepareStatement(Queries.insertBatchAttendence);
-            //connection.setAutoCommit(false);
             for (AttendenceInsertModel a : attendenceInsertModels) {
                 int percentage=(int) attendencePercentage(a.getStudentId());
                 ps.setInt(1,a.getStudentId());
@@ -170,7 +159,7 @@ public class AttendenceServices {
                 ps.setString(5,a.getLogoutTime());
                 ps.setInt(6,percentage);
                 ps.addBatch();
-            }  //Database Name Pass in dbName present in constant class
+            }
 
              batchCount = ps.executeBatch();
             count=0;
@@ -184,8 +173,6 @@ public class AttendenceServices {
 
             }
 
-
-                    //connection.close();
                 }
         catch(Exception e)
                 {

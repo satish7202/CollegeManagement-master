@@ -85,6 +85,7 @@ public class StudentController {
         counter=sqloperation.counttotalDetails();
         return counter;
     }
+    //@GetMapping("/student/select")
 
 
 

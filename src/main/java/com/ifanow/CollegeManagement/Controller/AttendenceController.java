@@ -1,13 +1,10 @@
 package com.ifanow.CollegeManagement.Controller;
 
 import com.google.gson.Gson;
-import com.ifanow.CollegeManagement.Models.AttendenceDeleteModel;
 import com.ifanow.CollegeManagement.Models.AttendenceInsertModel;
-import com.ifanow.CollegeManagement.Models.AttendenceModel;
 import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
 import com.ifanow.CollegeManagement.Services.AttendenceServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -52,20 +49,18 @@ public class AttendenceController {
 
 
     }
-    @CrossOrigin("localhost:4200")
+    @CrossOrigin(origins = "localhost:4200")
     @PostMapping(path = "/attendence/insertBatch")
     public String setAttendenceBatch(@RequestBody AttendenceInsertModel[] attendenceBatch)
     {
         int insertedRows = attendence.attdendenceInsertBatch(attendenceBatch);
         return gson.toJson("InsertedRows="+insertedRows);
     }
-    @CrossOrigin("localhost:4200")
+    @CrossOrigin( origins="localhost:4200")
     @DeleteMapping(path = "/attendence/deleteBatch")
    public String attendenceDelete(@RequestBody int[] attendenceDeleteModel )
   {
 
-      //  System.out.println(attendenceDeleteModel);
-       // String m=gson.fromJson(attendenceDeleteModel,String.class);
         int deletedRows = attendence.deleteBatch(attendenceDeleteModel);
         return "DeletedRows="+deletedRows;
 
