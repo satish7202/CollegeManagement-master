@@ -17,7 +17,6 @@ public class Queries {
     public final String updateLibraryData = "Update library set  bookName = ? ,issueDate=?, returnDate=?, numberOfBook =?,librarian=? ,Status = ? where srNo =?";
     public  final String deleteLibraryData  = "DELETE FROM library  WHERE srNo= ? ";
     public final String countLibraryData = "SELECT COUNT(*) AS totalLibraryData FROM library";
-
     ////----------------------------Department Table----------------------------------------------
     public static final String selectQuery="select * from department";
     public static final String updateQueryDepartment="update department set departmentName =?,departmentHead=?,teachersAll=? where departmentId=?";

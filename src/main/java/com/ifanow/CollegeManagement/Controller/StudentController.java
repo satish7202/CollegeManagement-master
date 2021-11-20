@@ -5,6 +5,9 @@ import com.ifanow.CollegeManagement.Services.studentServices;
 import com.ifanow.CollegeManagement.Models.studentModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.Retrofit;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.IOException;
@@ -85,9 +88,12 @@ public class StudentController {
         counter=sqloperation.counttotalDetails();
         return counter;
     }
-    //@GetMapping("/student/select")
-
-
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/student/select")
+    public  String getstudentsDetails(@RequestParam String sId)
+    {
+        return "Hellooo";
+    }
 
 
 

@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import com.ifanow.CollegeManagement.Models.AttendenceInsertModel;
 import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
 import com.ifanow.CollegeManagement.Services.AttendenceServices;
+import com.ifanow.CollegeManagement.Services.ExternalApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import java.io.IOException;
-
 @RestController
 public class AttendenceController {
     Gson gson=new Gson();
@@ -66,4 +68,25 @@ public class AttendenceController {
         return gson.toJson("DeletedRows="+deletedRows);
 
   }
+    @CrossOrigin( origins="http://localhost:4200")
+    @PostMapping(path = "/attendence/exteranalApi")
+    public String attendenceDelete() throws IOException {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080")
+                .addConverterFactory(ScalarsConverterFactory.create()).build();
+        ExternalApi externalApi = retrofit.create(ExternalApi.class);
+        final Call<String> call = externalApi.listRepos("Hello");
+       String  repos = String.valueOf(call.execute().body());
+        return repos;
+    }
+    @CrossOrigin( origins="http://localhost:4200")
+    @GetMapping(path = "/attendence/count")
+    public int attendenceCount()
+    {
+        int length=attendence.count();
+        return length;
+
+    }
+
+
+
 }
