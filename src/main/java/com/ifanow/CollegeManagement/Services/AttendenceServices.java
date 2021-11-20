@@ -7,12 +7,7 @@ import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
 import com.ifanow.CollegeManagement.Query.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+
 
 import java.io.IOException;
 import java.net.URI;
@@ -27,6 +22,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+
 @Component
 public class AttendenceServices {
     @Autowired
@@ -35,10 +31,11 @@ public class AttendenceServices {
     PreparedStatement ps;
     int[] batchCount;
     int count=0;
-
     public int insertAttendence(AttendenceInsertModel attendenceInsertModel,float attendencePercentage)
     {
         try {
+            //SelectStudentDetails selectStudentDetails = re
+
 
             connection = dbconnection.getconnect();
             ps = connection.prepareStatement(Queries.insertAttendence);
@@ -252,5 +249,11 @@ public class AttendenceServices {
             System.out.println("Error..."+e);
         }
         return length;
+    }
+    public String callOtherApi(String url) throws IOException, InterruptedException {
+        HttpRequest request =  HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
+        HttpClient client=HttpClient.newBuilder().build();
+        HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        return String.valueOf(response);
     }
 }

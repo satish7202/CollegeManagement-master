@@ -128,14 +128,14 @@ public class LibraryServices {
         return updated_row;
     }
     public int LibraryDetails(){
-        int count = 1;
+        int count = 0;
         try{
             connection = dbConnection.getconnect();
 
             PreparedStatement ps=connection.prepareStatement(queries.countLibraryData);
             ResultSet rs=ps.executeQuery();
             while (rs.next()) {
-                System.out.println(rs.getString("totalLibraryData"));
+                count = rs.getInt("totalLibraryData");
             }
 
         }
