@@ -35,7 +35,7 @@ public class LibraryController {
         String studentName = libraryJsonModel.getStudentName();
         String bookName = libraryJsonModel.getBookName();
         String issueDate = libraryJsonModel.getIssueDate();
-       // String returnDate = libraryJsonModel.getReturnDate();
+        // String returnDate = libraryJsonModel.getReturnDate();
         String librarian = libraryJsonModel.getLibrarian();
         String count = gson.toJson("Data Successfully Inserted..No of Rows=" + libraryServices.saveLibraryDetails(studentId, studentName, bookName, issueDate, numberOfBook, librarian));
         System.out.println("toJson"+count);
@@ -89,9 +89,9 @@ public class LibraryController {
 //        byte[] decodedBytes = Base64.getDecoder().decode(libraryInsertDetail);
 //        String decodedString = new String(decodedBytes);
 //        System.out.println(decodedString);
-       int[] updated_row= new int[0];
+        int[] updated_row= new int[0];
         Gson gson = new Gson();
-       updated_row = libraryServices.saveMultiLibraryDetails(libraryInsertDetail);
+        updated_row = libraryServices.saveMultiLibraryDetails(libraryInsertDetail);
         return gson.toJson( updated_row);
     }
 
@@ -116,5 +116,3 @@ public class LibraryController {
     }
 
 }
-
-
