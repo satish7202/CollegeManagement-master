@@ -43,13 +43,14 @@ public class AttendenceController {
     @PutMapping(path = "/attendence/update")
     public String attendenceUpdate(@RequestBody AttendenceUpdateModel attendenceupdatemodel) throws IOException {
         int updatedRow=0;
-        int attendencePercentage= (int)attendence.attendencePercentage(attendenceupdatemodel.getStudentId());
+        int attendencePercentage=0;
+        attendencePercentage = (int)attendence.attendencePercentage(attendenceupdatemodel.getStudentId());
         updatedRow=attendence.attendenceUpdate(attendenceupdatemodel,attendencePercentage);
         return gson.toJson("Successfully..Updated Rows="+String.valueOf(updatedRow));
 
 
     }
-    @CrossOrigin(origins = "localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(path = "/attendence/insertBatch")
     public String setAttendenceBatch(@RequestBody AttendenceInsertModel[] attendenceBatch)
     {

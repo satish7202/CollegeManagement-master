@@ -109,7 +109,7 @@ public class AttendenceServices {
             ps.setString(3,attendenceUpdateModel.getLoginTime());
             ps.setString(4,attendenceUpdateModel.getLogoutTime());
             ps.setInt(5,attdencePercentage);
-            ps.setInt(6,attendenceUpdateModel.getStudentId());
+            ps.setInt(6,attendenceUpdateModel.getSrNo());
             updated_row = ps.executeUpdate();
 
         }
