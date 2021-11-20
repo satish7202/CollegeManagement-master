@@ -82,6 +82,7 @@ public class AttendenceController {
     @GetMapping(path = "/attendence/count")
     public int attendenceCount()
     {
+        //Hello
         int length=attendence.count();
         return length;
 
