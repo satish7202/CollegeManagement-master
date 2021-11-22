@@ -20,7 +20,7 @@ public class LibraryController {
     LibraryServices libraryServices;
 
 
-    @CrossOrigin("http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/storeLibraryDetails")
     public String savLibraryDetails(@RequestBody String libraryInsertDetail) throws IOException {
         System.out.println(libraryInsertDetail);
@@ -41,7 +41,7 @@ public class LibraryController {
         System.out.println("toJson"+count);
         return count;
     }
-    @CrossOrigin("http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/showLibraryDetails")
     public String showLibrayDetails()
     {
@@ -49,7 +49,7 @@ public class LibraryController {
         String libraryjsonObj =libraryModeljson.toJson(libraryServices.showAllLibraryDetail());
         return libraryjsonObj;
     }
-    @CrossOrigin("http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/updateLibraryDetails")
     public String updateLibraryDetails(@RequestBody String libraryUpdateDetail) throws ParseException {
 
@@ -70,7 +70,7 @@ public class LibraryController {
         return gson.toJson("Successfully..Updated Rows="+String.valueOf(updateRow));
     }
 
-    @CrossOrigin("http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/deleteLibraryDetails")
     public String deleteLibraryDetail(@RequestBody int srNo) throws IOException {
         int deletedRow;
@@ -79,7 +79,7 @@ public class LibraryController {
         return gson.toJson("deleted Row"+deletedRow);
     }
 
-    @CrossOrigin("http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/totalLibraryDetails")
     public int totalLibrrayDetail(){
         Gson gson = new Gson();
@@ -88,7 +88,7 @@ public class LibraryController {
         return count;
     }
 
-    @CrossOrigin("http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("insertMultipleLibraryDetail")
     public String insertMultipleLibraryDetail(@RequestBody LibraryModel[] libraryInsertDetail) {
         System.out.println(libraryInsertDetail);
@@ -109,16 +109,16 @@ public class LibraryController {
 //    }
 
 
-    @CrossOrigin("http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/deleteLibraryDetailsBatch")
-    public String deleteLibraryDetail(@RequestBody int[] srNo) throws IOException {
+    public String deleteLibraryDetailBatch(@RequestBody int[] srNo) throws IOException {
         Gson gson = new Gson();
         int[] deletedRow = libraryServices.deleteLibraryDetailBatch(srNo);;
 
         return gson.toJson("DeletedRows="+deletedRow);
     }
 
-    @CrossOrigin("http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("getStudentDetails")
     public List<Object> getStudentDetail(){
         String url = "http://localhost:8080/api/showStudentDetails";
