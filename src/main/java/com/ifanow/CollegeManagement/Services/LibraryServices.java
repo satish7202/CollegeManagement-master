@@ -108,7 +108,7 @@ public class LibraryServices {
     }
 
 
-    public int updateLibraryDetail(int srNo, String bookName, String issueDate, String returnDate,String studentReturnDate, String librarian, String Status){
+    public int updateLibraryDetail(int srNo, String bookName, String issueDate, String returnDate,String studentReturnDate,int panelty, String librarian, String Status){
         int updated_row=0;
         try {
             connection = dbConnection.getconnect();
@@ -119,9 +119,10 @@ public class LibraryServices {
             ps.setString(2,issueDate);
             ps.setString(3,returnDate);
             ps.setString(4,studentReturnDate);
-            ps.setString(5,librarian);
-            ps.setString(6,Status);
-            ps.setInt(7,srNo);
+            ps.setInt(5,panelty);
+            ps.setString(6,librarian);
+            ps.setString(7,Status);
+            ps.setInt(8,srNo);
 
             updated_row = ps.executeUpdate();
             System.out.println("Records Updated Successfully");

@@ -2,6 +2,10 @@ package com.ifanow.CollegeManagement.Models;
 
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Component
 public class LibraryModel {
     public int srNo, studentId;
@@ -11,7 +15,7 @@ public class LibraryModel {
     public String issueDate;
     public String returnDate;
     public String studentReturnDate;
-    public int penalty;
+    public int Penalty;
     public String Status;
     public String librarian;
     public String UpdateTimeStamp;
@@ -76,12 +80,26 @@ public class LibraryModel {
         this.studentReturnDate = studentReturnDate;
     }
 
-    public int getPenalty() {
-        return penalty;
+    public int getPenalty(String returnDate,String studentReturnDate) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        Date returndate = formatter.parse(returnDate);
+        Date studentReturndate = formatter.parse(studentReturnDate);
+        long difference_In_Time = studentReturndate.getTime() - returndate.getTime();
+        if (returndate.before(studentReturndate))
+        {
+            long difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
+            Penalty = (int) (difference_In_Days * 2);
+            System.out.println("........."+Penalty);
+        }
+        else
+        {
+            Penalty = 0;
+        }
+        return Penalty;
     }
 
     public void setPenalty(int penalty) {
-        this.penalty = penalty;
+        this.Penalty = penalty;
     }
 
     public String getStatus() {
@@ -116,7 +134,7 @@ public class LibraryModel {
         this.issueDate = issueDate;
         this.returnDate = returnDate;
         this.studentReturnDate = studentReturnDate;
-        this.penalty = penalty;
+        this.Penalty = penalty;
         this.Status = status;
         this.librarian = librarian;
         UpdateTimeStamp = updateTimeStamp;
@@ -132,7 +150,7 @@ public class LibraryModel {
                 ", issueDate='" + issueDate + '\'' +
                 ", returnDate='" + returnDate + '\'' +
                 ", studentReturnDate='" + studentReturnDate + '\'' +
-                ", penalty=" + penalty +
+                ", penalty=" + Penalty +
                 ", Status='" + Status + '\'' +
                 ", librarian='" + librarian + '\'' +
                 ", UpdateTimeStamp='" + UpdateTimeStamp + '\'' +
