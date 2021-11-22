@@ -2,6 +2,7 @@ package com.ifanow.CollegeManagement.Controller;
 
 import com.google.gson.Gson;
 import com.ifanow.CollegeManagement.Models.AttendenceInsertModel;
+import com.ifanow.CollegeManagement.Models.AttendencePaggingModel;
 import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
 import com.ifanow.CollegeManagement.Services.AttendenceServices;
 import com.ifanow.CollegeManagement.Services.ExternalApi;
@@ -86,6 +87,19 @@ public class AttendenceController {
         return length;
 
     }
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PostMapping(path = "/attendenceLimit")
+	public String attendenceHomeLimit(@RequestBody String input) throws IOException {
+		Gson gson=new Gson();
+
+		AttendencePaggingModel attendencePaggingModel=gson.fromJson(input,AttendencePaggingModel.class);
+		int noOfPage=attendence.count()/attendencePaggingModel.getPageSize();
+		attendencePaggingModel = new AttendencePaggingModel(attendencePaggingModel.getLength(),attendencePaggingModel.getPageIndex(),attendencePaggingModel.getPageSize(),attendencePaggingModel.getPreviousPageIndex(),noOfPage);
+		String listModel = gson.toJson(attendence.selectAttendenceLimit(attendencePaggingModel));
+		String encodedList=attendence.Encode(listModel);
+		String decodedlist=attendence.Decode(encodedList);
+		return decodedlist;
+	}
 
 
 
