@@ -57,7 +57,7 @@ public class AttendencePaggingModel {
 			}
 			else if (pageIndex == i)
 			{
-				this.pageIndex=pageIndex*5;
+				this.pageIndex=pageIndex*pageSize;
 				break;
 			}
 
