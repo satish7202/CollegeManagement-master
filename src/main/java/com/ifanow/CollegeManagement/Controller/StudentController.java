@@ -14,6 +14,7 @@ import springfox.documentation.spring.web.json.Json;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +101,23 @@ public class StudentController {
         AttendenceSingleStudent attendenceSingleStudent = sqloperation.SelectSingleStudent(studentId);
         System.out.println(attendenceSingleStudent);
         return gson.toJson(attendenceSingleStudent);
+
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/InsertBatch")
+    public  String batchInserStudentDetails(@RequestBody  studentModel[]  studentinsert) throws IOException {
+
+        Gson gson=new Gson();
+        int []rows=sqloperation.batchInsertStudent(studentinsert);
+        return gson.toJson("rows="+rows);
+
+    }
+
+    @CrossOrigin(origins = " http://localhost:4200")
+    @DeleteMapping("/DeleteMultiplerecordes")
+    public void deletestudent(@RequestBody int[] studentId) throws SQLException {
+        sqloperation.DeleteMultipalRecords(studentId);
+
 
     }
 

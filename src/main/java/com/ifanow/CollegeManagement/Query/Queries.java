@@ -26,7 +26,7 @@ public class Queries {
 
     public static final String updateQueryDepartment="update department set departmentName =?,departmentHead=? where departmentId=?";
     public static final String insertQueryDepartment= "INSERT INTO department(departmentName,departmentHead) VALUES ((?),(?))";
-    public static final String deleteQueryDepartment="delete from department where departmentId=?";
+    public static final String deleteQueryDepartment="delete from department where departmentId=(?)";
 
     public static final String deleteQueryteachers="delete from teachers where deptId=?";
     public static final String totalcountdepartment="select count(*) as total from department";

@@ -8,10 +8,7 @@ import com.ifanow.CollegeManagement.Query.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,6 +167,59 @@ public class studentServices {
             System.out.println(e);
         }
         return attendenceSingleStudent;
+    }
+    //BatchInserting
+    public int[] batchInsertStudent( studentModel[] models){
+        int[] insert=new int[0];
+        try{
+            connection=dbConnection.getconnect();
+
+
+            pstmt = connection.prepareStatement(queries.InsertStudent);
+
+            for(int i=0;i<models.length;i++) {
+
+                pstmt.setInt(1, models[i].getStudentId());
+                pstmt.setString(2, models[i].getStudentName());
+                pstmt.setString(3, models[i].getDepartmentName());
+                pstmt.setString(4, models[i].getStudentMobileNo());
+                pstmt.setString(5, models[i].getStudentAddmissionDate());
+
+                pstmt.addBatch();
+            }
+            insert= pstmt.executeBatch();
+
+            int count=0;
+            for(int i=0;i<insert.length;i++){
+                count++;
+            }
+            System.out.println("Record inserted sucessfully..");
+
+            connection.close();
+            System.out.println("Connection closed");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return insert;
+    }
+    public int[] DeleteMultipalRecords(int[] studentId) throws SQLException {
+
+        int delete[]=new int[0];
+        try{
+            connection=dbConnection.getconnect();
+            pstmt=connection.prepareStatement(queries.DeleteStudent);
+            for(int i=0;i<studentId.length;i++){
+                pstmt.setInt(1,studentId[i]);
+                pstmt.addBatch();
+            }
+            delete=pstmt.executeBatch();
+            System.out.println("data Deleted successfully...");
+            connection.close();
+            System.out.println("Connection closed");
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return delete;
     }
 
 

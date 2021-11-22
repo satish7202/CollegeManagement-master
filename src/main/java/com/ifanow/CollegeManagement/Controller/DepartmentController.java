@@ -19,21 +19,18 @@ public class DepartmentController {
     Gson gson=new Gson();
     @Autowired
     DepartmentServices departmentServices;
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/getDepartmentCount", method = RequestMethod.GET)
     @ResponseBody
-    @CrossOrigin(origins = " http://localhost:4200")
     public int getdepartmentcount()
     {
         int totaldepartment= departmentServices.totaldepartments();
         return totaldepartment;
     }
 
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/getDepartment", method = RequestMethod.GET)
     @ResponseBody
-    @CrossOrigin(origins = " http://localhost:4200")
-
     public String  getdepartmentgson() {
 
         List<String> listdepartment;
@@ -60,7 +57,7 @@ public class DepartmentController {
         String count =gson.toJson("Data Successfully  Inserted..No of Rows="+departmentServices.Insert(deptname,depthead,teachersAll));
         return count;
     }
-    @CrossOrigin(origins = " http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/updateDepartment", method = RequestMethod.PUT)
     @ResponseBody
     public String updateDepartment(@RequestBody String updatedepartment) throws IOException
@@ -77,7 +74,7 @@ public class DepartmentController {
         return gson.toJson("Successfully..Updated Rows="+String.valueOf(updatedRow));
 
     }
-    @CrossOrigin(origins = " http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/deleteDepartment", method = RequestMethod.DELETE)
     @ResponseBody
     public int deleteDepartment(@RequestParam("deptId") int deptId )throws IOException
@@ -86,7 +83,7 @@ public class DepartmentController {
         int count = departmentServices.delete(deptId);
         return count;
     }
-    @CrossOrigin(origins = " http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/insertbatchdepartment", method = RequestMethod.POST)
     @ResponseBody
     public String insertbatchdepartment(@RequestBody DepartmentModel[] departmentModels)
@@ -98,12 +95,10 @@ public class DepartmentController {
         return gson.toJson(updated_row);
     }
 
-    @CrossOrigin(origins = " http://localhost:4200")
-    @DeleteMapping("/DeleteMultiplDepartment")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping("/DeleteMultiplDepartment")
     public void deletestudent(@RequestBody int[] deptId) throws SQLException {
         departmentServices.DeleteMultipaldepartment(deptId);
-
-
 
     }
 
