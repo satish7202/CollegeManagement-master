@@ -34,6 +34,7 @@ public class Queries {
     ///-----------------------------Attendence Table------------------------------------------------
     public static String insertAttendence="INSERT INTO attendence(`studentId`,`studentName`, `department`,`loginTime`,`logoutTime`,`attendancePercentage`)VALUES((?),(?),(?),(?),(?),(?));";
     public static String selectAttendence="SELECT * FROM attendence;";
+    public static String selectAttendenceLimit="SELECT * FROM `ifanow`.`attendence` limit ? offset ?;";
     public static String deleteAttendence="DELETE FROM `attendence`WHERE srNo=(?);";
     public static String updateAttendence="UPDATE `attendence`SET`studentName` = (?) ,`department` = (?),`loginTime` = (?),`logoutTime` = (?),`attendancePercentage`=(?) WHERE `srNo`= (?);";
     public static String percentageAttendenceQuery="SELECT studentName FROM `attendence`WHERE studentId= ?;";

@@ -3,6 +3,7 @@ package com.ifanow.CollegeManagement.Services;
 import com.ifanow.CollegeManagement.Connection.DbConnection;
 import com.ifanow.CollegeManagement.Models.AttendenceInsertModel;
 import com.ifanow.CollegeManagement.Models.AttendenceModel;
+import com.ifanow.CollegeManagement.Models.AttendencePaggingModel;
 import com.ifanow.CollegeManagement.Models.AttendenceUpdateModel;
 import com.ifanow.CollegeManagement.Query.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -255,5 +256,36 @@ public class AttendenceServices {
         HttpClient client=HttpClient.newBuilder().build();
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
         return String.valueOf(response);
+    }
+    public List selectAttendenceLimit(AttendencePaggingModel attendencePaggingModel)
+    {
+        AttendenceModel[] model=new AttendenceModel[100];
+        List<AttendenceModel> listModel = new ArrayList<>();
+        int length=0;
+        try {
+            ps=null;
+            connection = dbconnection.getconnect();
+            Statement stmt = connection.createStatement();
+            ps=connection.prepareStatement(Queries.selectAttendenceLimit);
+           ps.setInt(1,attendencePaggingModel.getPageSize());
+           ps. setInt(2,attendencePaggingModel.getPageIndex());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                model[length] = new AttendenceModel(rs.getInt(1),rs.getInt(2),
+                        rs.getString(3),rs.getString(4),rs.getString(5),
+                        rs.getString(6),rs.getInt(7));
+                listModel.add(model[length]);
+                length++;
+
+
+            }
+
+            connection.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error..."+e);
+        }
+        return listModel;
     }
 }
