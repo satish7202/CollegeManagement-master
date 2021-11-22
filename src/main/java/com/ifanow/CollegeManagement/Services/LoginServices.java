@@ -33,7 +33,7 @@ public class LoginServices {
             for(int i1=0;i1<i;i1++)
                 while (rs.next()) {
                     //System.out.println(rs.getString("person_id") +" " +rs.getString("name"));
-                    login[i1] = new LoginModel(rs.getInt("userId"),rs.getString("userName"),rs.getString("password"));
+                    login[i1] = new LoginModel(rs.getInt("userId"),rs.getString("userName"),rs.getString("password"),rs.getString("email"));
                     Listifa.add(login[i1]);
                 }
 

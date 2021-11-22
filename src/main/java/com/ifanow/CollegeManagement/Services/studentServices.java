@@ -2,6 +2,7 @@ package com.ifanow.CollegeManagement.Services;
 
 import com.google.gson.Gson;
 import com.ifanow.CollegeManagement.Connection.DbConnection;
+import com.ifanow.CollegeManagement.Models.AttendenceSingleStudent;
 import com.ifanow.CollegeManagement.Models.studentModel;
 import com.ifanow.CollegeManagement.Query.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,7 +135,6 @@ public class studentServices {
         try{
             connection=dbConnection.getconnect();
             stmt=connection.createStatement();
-
             ResultSet rs=stmt.executeQuery(queries.conutStudent);
             while (rs.next()){
                counter=rs.getInt("total");
@@ -144,6 +144,32 @@ public class studentServices {
             System.out.println(e);
         }
         return counter;
+    }
+    public AttendenceSingleStudent SelectSingleStudent(int sid){
+
+        int count=0;
+
+        AttendenceSingleStudent attendenceSingleStudent=null;
+        try{
+            PreparedStatement ps;
+            connection=dbConnection.getconnect();
+
+            stmt=connection.createStatement();
+            ps=connection.prepareStatement(queries.selectSingleStudent);
+            ps.setInt(1,sid);
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()){
+//                System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3)
+//                        +" "+rs.getString(4)+" "+rs.getString(5));
+                attendenceSingleStudent = new AttendenceSingleStudent(rs.getString(1),rs.getString(2));
+                count++;
+            }
+            connection.close();
+        }catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return attendenceSingleStudent;
     }
 
 

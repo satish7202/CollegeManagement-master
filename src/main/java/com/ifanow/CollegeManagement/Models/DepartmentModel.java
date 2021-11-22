@@ -7,7 +7,9 @@ public class DepartmentModel {
     int departmentId;
     String departmentName;
     String departmentHead;
-    String teachersAll;
+    //String teachersAll;
+    String[] teachersAll;
+    // Array<String> teachersAll = new ArrayList<String>();
 
     public int getDepartmentId() {
         return departmentId;
@@ -33,19 +35,25 @@ public class DepartmentModel {
         this.departmentHead = departmentHead;
     }
 
-    public String getTeachersAll() {
+    public String []   getTeachersAll() {
         return teachersAll;
     }
 
-    public void setTeachersAll(String teachersAll) {
+    public void setTeachersAll(String[] teachersAll) {
         this.teachersAll = teachersAll;
     }
 
-    public DepartmentModel(int departmentId, String departmentName, String departmentHead, String teachersAll) {
+    public DepartmentModel(int departmentId, String departmentName, String departmentHead, String[] teachersAll ) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
         this.departmentHead = departmentHead;
         this.teachersAll = teachersAll;
+    }
+    public DepartmentModel(int departmentId, String departmentName, String departmentHead ) {
+        this.departmentId = departmentId;
+        this.departmentName = departmentName;
+        this.departmentHead = departmentHead;
+
     }
 }
 

@@ -10,6 +10,7 @@ public class Queries {
     public static String UpdateStudent ="UPDATE `student` SET studentName = ?, departmentName = ? ,studentMobileNo=?,studentAdmissionDate=? WHERE studentId = ?";
     public static String DeleteStudent=  "delete from student where studentId=(?);";
     public static String conutStudent=" select count(*) as total from student";
+    public static String selectSingleStudent="select studentName,departmentName from student Where studentId=(?);";
 
 
     //----------------------------Library Table----------------------------------------------
@@ -19,10 +20,15 @@ public class Queries {
     public  final String deleteLibraryData  = "DELETE FROM library  WHERE srNo= ? ";
     public final String countLibraryData = "SELECT COUNT(*) AS totalLibraryData FROM library";
     ////----------------------------Department Table----------------------------------------------
-    public static final String selectQuery="select * from department";
-    public static final String updateQueryDepartment="update department set departmentName =?,departmentHead=?,teachersAll=? where departmentId=?";
-    public static final String insertQueryDepartment= "INSERT INTO department(departmentName,departmentHead,teachersAll) VALUES ((?),(?),(?))";
+    public static final String selectQuery="select d.departmentId,d.departmentName,d.departmentHead,t.teacherName from department d inner join teachers t on d.departmentId=t.deptId";
+    //   public static final String insertdepartment=  "insert into departmentteachers(deptname,deptHead,teacher1,teacher2.teacher3,teacher4) values  ((?),(?),(?),(?),(?),(?))";
+    public static final String insertteachers="insert into teachers(deptId,teacherName) values((?),(?))";
+
+    public static final String updateQueryDepartment="update department set departmentName =?,departmentHead=? where departmentId=?";
+    public static final String insertQueryDepartment= "INSERT INTO department(departmentName,departmentHead) VALUES ((?),(?))";
     public static final String deleteQueryDepartment="delete from department where departmentId=?";
+
+    public static final String deleteQueryteachers="delete from teachers where deptId=?";
     public static final String totalcountdepartment="select count(*) as total from department";
 
     ///-----------------------------Attendence Table------------------------------------------------

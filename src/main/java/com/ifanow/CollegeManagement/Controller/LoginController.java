@@ -1,9 +1,11 @@
 package com.ifanow.CollegeManagement.Controller;
 
+import com.google.gson.Gson;
 import com.ifanow.CollegeManagement.Models.LoginModel;
 import com.ifanow.CollegeManagement.Services.LoginServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.ifanow.CollegeManagement.Models.checkLoginModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.List;
 public class LoginController {
     @Autowired
     LoginServices service;
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/getLoginCount", method = RequestMethod.GET)
     @ResponseBody
     public int getRegistercount()
@@ -22,7 +25,7 @@ public class LoginController {
         return totaldepartment;
     }
 
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/getLogin", method = RequestMethod.GET)
     @ResponseBody
 
@@ -37,17 +40,18 @@ public class LoginController {
     }
 
 
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/insertLogin", method = RequestMethod.POST)
     @ResponseBody
-    public int LoginInsert(@RequestParam String userName,@RequestParam String email,@RequestParam String password) throws IOException {
-        String  usernameString=userName;
-        String  emailstring=email;
-        String passwordstring = password;
-        int count = service.Insert(usernameString,emailstring,passwordstring);
+    public int LoginInsert(@RequestBody LoginModel loginModel) throws IOException {
+        System.out.println(loginModel);
+                String  usernameString=loginModel.getUserName();
+        String  emailstring=loginModel.getEmail();
+       String passwordstring = loginModel.getPassword();
+       int count = service.Insert(usernameString,emailstring,passwordstring);
         return count;
     }
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/updateLogin", method = RequestMethod.PUT)
     @ResponseBody
     public int updateDepartment(@RequestParam int userId,@RequestParam String userName,@RequestParam String password) throws IOException
@@ -58,6 +62,7 @@ public class LoginController {
         int count = service.update(userId,userName,password);
         return count;
     }
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/deleteLogin", method = RequestMethod.DELETE)
     @ResponseBody
     public int deleteDepartment(@RequestParam int userId )throws IOException
@@ -66,13 +71,15 @@ public class LoginController {
         int count = service.delete(userIdString);
         return count;
     }
-    @RequestMapping(path = "/findregisteredUser", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(path = "/findregisteredUser")
     @ResponseBody
-    public String  findregisteredUser(@RequestParam String email, @RequestParam String password)throws IOException
+    public String  findregisteredUser(@RequestBody checkLoginModel loginModel )throws IOException
     {
-        String emailstring=email;
-        String passwordString=password;
+        String emailstring=loginModel.getEmail();
+        String passwordString=loginModel.getPassword();
         String  find=service.finduser(emailstring,passwordString);
-        return find;
+        Gson gson = new Gson();
+        return gson.toJson(find);
     }
 }
