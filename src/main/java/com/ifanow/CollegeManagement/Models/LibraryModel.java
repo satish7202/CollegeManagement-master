@@ -4,33 +4,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LibraryModel {
-    public int srNo, studentId,numberOfBook;
+    public int srNo, studentId;
+
     public String studentName;
     public String bookName;
     public String issueDate;
     public String returnDate;
-    public String librarian;
+    public String studentReturnDate;
+    public int penalty;
     public String Status;
+    public String librarian;
     public String UpdateTimeStamp;
-    public String getUpdateTimeStamp() {
-        return UpdateTimeStamp;
+
+    public LibraryModel() {
+
     }
-
-    public void setUpdateTimeStamp(String updateTimeStamp) {
-        UpdateTimeStamp = updateTimeStamp;
-    }
-
-
-
-    public String getStatus() {
-        return Status;
-    }
-
-    public void setStatus(String status) {
-        Status = status;
-    }
-
-
 
     public int getSrNo() {
         return srNo;
@@ -40,24 +28,12 @@ public class LibraryModel {
         this.srNo = srNo;
     }
 
-    public LibraryModel() {
-
-    }
-
     public int getStudentId() {
         return studentId;
     }
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
-    }
-
-    public int getNumberOfBook() {
-        return numberOfBook;
-    }
-
-    public void setNumberOfBook(int numberOfBook) {
-        this.numberOfBook = numberOfBook;
     }
 
     public String getStudentName() {
@@ -92,6 +68,30 @@ public class LibraryModel {
         this.returnDate = returnDate;
     }
 
+    public String getStudentReturnDate() {
+        return studentReturnDate;
+    }
+
+    public void setStudentReturnDate(String studentReturnDate) {
+        this.studentReturnDate = studentReturnDate;
+    }
+
+    public int getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(int penalty) {
+        this.penalty = penalty;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
     public String getLibrarian() {
         return librarian;
     }
@@ -100,17 +100,26 @@ public class LibraryModel {
         this.librarian = librarian;
     }
 
-    public LibraryModel(int srNo,int studentId, int numberOfBook, String studentName, String bookName, String issueDate, String returnDate, String librarian,String Status,String UpdateTimeStamp) {
+    public String getUpdateTimeStamp() {
+        return UpdateTimeStamp;
+    }
+
+    public void setUpdateTimeStamp(String updateTimeStamp) {
+        UpdateTimeStamp = updateTimeStamp;
+    }
+
+    public LibraryModel(int srNo, int studentId, String studentName, String bookName, String issueDate, String returnDate, String studentReturnDate, int penalty, String status, String librarian, String updateTimeStamp) {
         this.srNo = srNo;
         this.studentId = studentId;
-        this.numberOfBook = numberOfBook;
         this.studentName = studentName;
         this.bookName = bookName;
         this.issueDate = issueDate;
         this.returnDate = returnDate;
+        this.studentReturnDate = studentReturnDate;
+        this.penalty = penalty;
+        this.Status = status;
         this.librarian = librarian;
-        this.Status=Status;
-        this.UpdateTimeStamp=UpdateTimeStamp;
+        UpdateTimeStamp = updateTimeStamp;
     }
 
     @Override
@@ -118,13 +127,14 @@ public class LibraryModel {
         return "LibraryModel{" +
                 "srNo=" + srNo +
                 ", studentId=" + studentId +
-                ", numberOfBook=" + numberOfBook +
                 ", studentName='" + studentName + '\'' +
                 ", bookName='" + bookName + '\'' +
                 ", issueDate='" + issueDate + '\'' +
                 ", returnDate='" + returnDate + '\'' +
-                ", librarian='" + librarian + '\'' +
+                ", studentReturnDate='" + studentReturnDate + '\'' +
+                ", penalty=" + penalty +
                 ", Status='" + Status + '\'' +
+                ", librarian='" + librarian + '\'' +
                 ", UpdateTimeStamp='" + UpdateTimeStamp + '\'' +
                 '}';
     }

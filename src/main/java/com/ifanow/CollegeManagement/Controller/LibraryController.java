@@ -30,13 +30,13 @@ public class LibraryController {
         LibraryModel libraryJsonModel = gson.fromJson(libraryInsertDetail, LibraryModel.class);
         System.out.println("fromJson"+libraryJsonModel);
         int studentId = libraryJsonModel.getStudentId();
-        int numberOfBook = libraryJsonModel.getNumberOfBook();
+       // int numberOfBook = libraryJsonModel.getNumberOfBook();
         String studentName = libraryJsonModel.getStudentName();
         String bookName = libraryJsonModel.getBookName();
         String issueDate = libraryJsonModel.getIssueDate();
-        // String returnDate = libraryJsonModel.getReturnDate();
+        String returnDate = libraryJsonModel.getReturnDate();
         String librarian = libraryJsonModel.getLibrarian();
-        String count = gson.toJson("Data Successfully Inserted..No of Rows=" + libraryServices.saveLibraryDetails(studentId, studentName, bookName, issueDate, numberOfBook, librarian));
+        String count = gson.toJson("Data Successfully Inserted..No of Rows=" + libraryServices.saveLibraryDetails(studentId, studentName, bookName, issueDate, returnDate,librarian));
         System.out.println("toJson"+count);
         return count;
     }
@@ -54,16 +54,17 @@ public class LibraryController {
 
         int updateRow =0;
         System.out.println(libraryUpdateDetail);
-        Gson gson = new Gson();
-        LibraryModel libraryModel = gson.fromJson(libraryUpdateDetail, LibraryModel.class);
+      Gson gson = new Gson();
+      LibraryModel libraryModel = gson.fromJson(libraryUpdateDetail, LibraryModel.class);
         int srNo = libraryModel.getSrNo();
-        int numberOfBook = libraryModel.getNumberOfBook();
+        //int numberOfBook = libraryModel.getNumberOfBook();
         String bookName = libraryModel.getBookName();
         String issueDate = libraryModel.getIssueDate();
         String returnDate = libraryModel.getReturnDate();
+        String studentReturnDate = libraryModel.getStudentReturnDate();
         String librarian = libraryModel.getLibrarian();
         String Status = libraryModel.getStatus();
-        updateRow =libraryServices.updateLibraryDetail( srNo,  bookName,  issueDate,  returnDate,  numberOfBook,  librarian,Status);
+        updateRow =libraryServices.updateLibraryDetail( srNo,  bookName,  issueDate,  returnDate , studentReturnDate ,  librarian ,Status);
         return gson.toJson("Successfully..Updated Rows="+String.valueOf(updateRow));
     }
 

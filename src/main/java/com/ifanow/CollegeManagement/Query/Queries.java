@@ -14,8 +14,8 @@ public class Queries {
 
     //----------------------------Library Table----------------------------------------------
     public final String getAllLibraryData = "Select * from library";
-    public final String storeLibraryData = "insert into library(studentId,studentName,bookName,issueDate,returnDate,numberOfBook,librarian) values(?,?,?,?,issueDate + INTERVAL 7 DAY,?,?)";
-    public final String updateLibraryData = "Update library set  bookName = ? ,issueDate=?, returnDate=?, numberOfBook =?,librarian=? ,Status = ? where srNo =?";
+    public final String storeLibraryData = "insert into library(studentId,studentName,bookName,issueDate,returnDate,librarian) values(?,?,?,?,issueDate + INTERVAL 7 DAY,?)";
+    public final String updateLibraryData = "Update library set  bookName = ? ,issueDate = ?, returnDate = ?, studentReturnDate = ?,librarian=? ,Status = ? where srNo =?";
     public  final String deleteLibraryData  = "DELETE FROM library  WHERE srNo= ? ";
     public final String countLibraryData = "SELECT COUNT(*) AS totalLibraryData FROM library";
     ////----------------------------Department Table----------------------------------------------

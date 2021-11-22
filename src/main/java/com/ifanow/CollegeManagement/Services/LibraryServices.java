@@ -22,7 +22,7 @@ public class LibraryServices {
 
 
 
-    public int saveLibraryDetails(int studentId, String studentName, String bookName, String issueDate, int numberOfBook, String librarian){
+    public int saveLibraryDetails(int studentId, String studentName, String bookName, String issueDate,String returnDate, String librarian){
         int show = 0;
         try {
 
@@ -34,16 +34,14 @@ public class LibraryServices {
             libraryModel.setStudentName(studentName);
             libraryModel.setBookName(bookName);
             libraryModel.setIssueDate(issueDate);
-            //libraryModel.setReturnDate(returnDate);
-            libraryModel.setNumberOfBook(numberOfBook);
+            libraryModel.setReturnDate(returnDate);
             libraryModel.setLibrarian(librarian);
 
             stmt.setInt(1,libraryModel.getStudentId());
             stmt.setString(2,libraryModel.getStudentName() );
             stmt.setString(3,libraryModel.getBookName());
             stmt.setString(4,libraryModel.getIssueDate());
-           // stmt.setString(5,libraryModel.getReturnDate());
-            stmt.setInt(5,libraryModel.getNumberOfBook());
+            stmt.setString(5, libraryModel.getReturnDate());
             stmt.setString(6,libraryModel.getLibrarian());
 
             show = stmt.executeUpdate();
@@ -69,7 +67,17 @@ public class LibraryServices {
 
             while (result.next()) {
 
-                libraryModels[length] = new LibraryModel(result.getInt(1),result.getInt(2),result.getInt(7),result.getString(3),result.getString(4),result.getString(5),result.getString(6),result.getString(8),result.getString(9),result.getString(10));
+                libraryModels[length] = new LibraryModel(result.getInt("srNo"),
+                        result.getInt("studentId"),
+                        result.getString("studentName"),
+                        result.getString("bookName"),
+                        result.getString("issueDate"),
+                        result.getString("returnDate"),
+                        result.getString("studentReturnDate"),
+                        result.getInt("Penalty"),
+                        result.getString("Status"),
+                        result.getString("librarian"),
+                        result.getString("UpdateTimeStamp"));
                 libraryModelList.add(libraryModels[length]);
 
             }
@@ -100,7 +108,7 @@ public class LibraryServices {
     }
 
 
-    public int updateLibraryDetail(int srNo, String bookName, String issueDate, String returnDate, int numberOfBook, String librarian, String Status){
+    public int updateLibraryDetail(int srNo, String bookName, String issueDate, String returnDate,String studentReturnDate, String librarian, String Status){
         int updated_row=0;
         try {
             connection = dbConnection.getconnect();
@@ -110,7 +118,7 @@ public class LibraryServices {
             ps.setString(1,bookName);
             ps.setString(2,issueDate);
             ps.setString(3,returnDate);
-            ps.setInt(4,numberOfBook);
+            ps.setString(4,studentReturnDate);
             ps.setString(5,librarian);
             ps.setString(6,Status);
             ps.setInt(7,srNo);
@@ -157,8 +165,8 @@ public class LibraryServices {
                 stmt.setString(3, libraryInsertDetail[i].getBookName());
                 stmt.setString(4, libraryInsertDetail[i].getIssueDate());
                 //stmt.setString(5, libraryInsertDetail[i].getReturnDate());
-                stmt.setInt(5, libraryInsertDetail[i].getNumberOfBook());
-                stmt.setString(6, libraryInsertDetail[i].getLibrarian());
+                //stmt.setInt(5, libraryInsertDetail[i].getNumberOfBook());
+                stmt.setString(5, libraryInsertDetail[i].getLibrarian());
                 stmt.addBatch();
             }
             show = stmt.executeBatch();
