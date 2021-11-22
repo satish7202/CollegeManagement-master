@@ -110,6 +110,7 @@ public class LibraryController {
         libraryServices.deleteLibraryDetailBatch(srNo);
     }
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping("getStudentDetails")
     public List<Object> getStudentDetail(){
         String url = "http://localhost:8080/api/showStudentDetails";
