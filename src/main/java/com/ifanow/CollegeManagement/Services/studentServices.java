@@ -35,7 +35,7 @@ public class studentServices {
 
         int count=0;
 
-        studentModel[] studentmodel=new studentModel[5];
+        studentModel[] studentmodel=new studentModel[100];
         List<studentModel> studentModelList=new ArrayList<>();
         try{
             connection=dbConnection.getconnect();

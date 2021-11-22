@@ -113,8 +113,8 @@ public class StudentController {
 
     }
 
-    @CrossOrigin(origins = " http://localhost:4200")
-    @DeleteMapping("/DeleteMultiplerecordes")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping("/DeleteMultiplerecordes")
     public void deletestudent(@RequestBody int[] studentId) throws SQLException {
         sqloperation.DeleteMultipalRecords(studentId);
 
