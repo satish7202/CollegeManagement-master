@@ -71,7 +71,7 @@ public class DepartmentController {
         //  String teachersall=deptmodel.getTeachersAll();
         // String[] teachersall= deptmodel.getTeachersAll();
         updatedRow=departmentServices.update(deptId,deptname,deptHead);
-        return gson.toJson("Successfully..Updated Rows="+String.valueOf(updatedRow));
+        return gson.toJson("Successfully..Updated ="+String.valueOf(updatedRow));
 
     }
     @CrossOrigin(origins = "http://localhost:4200")
