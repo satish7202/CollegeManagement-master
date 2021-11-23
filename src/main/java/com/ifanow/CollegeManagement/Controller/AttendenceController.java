@@ -71,13 +71,13 @@ public class AttendenceController {
   }
     @CrossOrigin( origins="http://localhost:4200")
     @PostMapping(path = "/attendence/exteranalApi")
-    public String attendenceDelete() throws IOException {
+    public void attendenceDelete() throws IOException {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080")
                 .addConverterFactory(ScalarsConverterFactory.create()).build();
         ExternalApi externalApi = retrofit.create(ExternalApi.class);
-        final Call<String> call = externalApi.listRepos("Hello");
-       String  repos = String.valueOf(call.execute().body());
-        return repos;
+      //  final Call<String> call = externalApi.listRepos("Hello");
+      // String  repos = String.valueOf(call.execute().body());
+      //  return repos;
     }
     @CrossOrigin( origins="http://localhost:4200")
     @GetMapping(path = "/attendence/count")

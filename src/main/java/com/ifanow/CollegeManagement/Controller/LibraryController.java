@@ -98,7 +98,7 @@ public class LibraryController {
         int[] updated_row= new int[0];
         Gson gson = new Gson();
         updated_row = libraryServices.saveMultiLibraryDetails(libraryInsertDetail);
-        return "Inserted Successfully";
+        return gson.toJson("Inserted Successfully");
     }
 
 //    @CrossOrigin("http://localhost:4200")
@@ -110,7 +110,7 @@ public class LibraryController {
 
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @DeleteMapping("/deleteLibraryDetailsBatch")
+    @PutMapping("/deleteLibraryDetailsBatch")
     public String deleteLibraryDetailBatch(@RequestBody int[] srNo) throws IOException {
         Gson gson = new Gson();
         int[] deletedRow = libraryServices.deleteLibraryDetailBatch(srNo);;

@@ -16,7 +16,7 @@ import java.util.List;
 
 public class LoginServices {
     PreparedStatement ps = null;
-
+    PreparedStatement ps1 = null;
     @Autowired
     DbConnection dbconnection;
     Connection connection;
@@ -43,26 +43,7 @@ public class LoginServices {
         return Listifa;
         //  return null;
     }
-    public int Insert(String userName,String email,String password)
-    {
-        int count=0;
-        try {
-            connection = dbconnection.getconnect();
-            Statement stmt = connection.createStatement();
-            ps = connection.prepareStatement(Queries.insertQueryRegister);
 
-            ps.setString(1,userName);
-            ps.setString(2,email);
-            ps.setString(3,password);
-            count = ps.executeUpdate ();
-            connection.close();
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error..."+e);
-        }
-        return count;
-    }
 
 
     public int update(int userId,String userName, String password)
@@ -153,6 +134,41 @@ public class LoginServices {
 
         }
         return user;
+    }
+
+    public int Insert(String userName,String email,String password)
+    {
+
+        int count=0;
+        try {
+            connection = dbconnection.getconnect();
+            ResultSet rs;
+//            Statement stmt = connection.createStatement();
+            ps=connection.prepareStatement(Queries.selectQueryemail);
+            ps.setString(1,email);
+            rs =ps.executeQuery();
+            if(rs.next())
+                count=0;
+            else {
+
+
+
+                ps1 = connection.prepareStatement(Queries.insertQueryRegister);
+                ps1.setString(1, userName);
+                ps1.setString(2, email);
+                ps1.setString(3, password);
+
+
+
+                count = ps1.executeUpdate();
+            }
+            connection.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error..."+e);
+        }
+        return count;
     }
 
 }

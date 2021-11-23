@@ -59,7 +59,7 @@ public class studentServices {
     }
 
 
-    public int InsertStudent(int studentId, String studentName, String departmentName, String studentMobileNo, String studentAddmissionDate){
+    public int InsertStudent(int studentId, String studentName, String departmentName, String studentMobileNo, String studentAdmissionDate){
         int counterinsert=0;
         try{
             connection=dbConnection.getconnect();
@@ -69,13 +69,13 @@ public class studentServices {
             studentModel.setStudentName(studentName);
             studentModel.setDepartmentName(departmentName);
             studentModel.setStudentMobileNo(studentMobileNo);
-            studentModel.setStudentAddmissionDate(studentAddmissionDate);
+            studentModel.setStudentAdmissionDate(studentAdmissionDate);
 
             pstmt.setInt(1,studentModel.getStudentId());
             pstmt.setString(2,studentModel.getStudentName());
             pstmt.setString(3,studentModel.getDepartmentName());
             pstmt.setString(4,studentModel.getStudentMobileNo());
-            pstmt.setString(5,studentModel.getStudentAddmissionDate());
+            pstmt.setString(5,studentModel.getStudentAdmissionDate());
 
 
             counterinsert=pstmt.executeUpdate();
@@ -89,7 +89,7 @@ public class studentServices {
 
     }
 
-    public int UpdateStudent(int studentId,String studentName,String departmentName,String studentMobileNo,String studentAddmissionDate){
+    public int UpdateStudent(int studentId,String studentName,String departmentName,String studentMobileNo,String studentAdmissionDate){
 
         int counterupdate=0;
         try{
@@ -99,8 +99,9 @@ public class studentServices {
             pstmt.setString(1,studentName);
             pstmt.setString(2,departmentName);
             pstmt.setString(3,studentMobileNo);
-            pstmt.setString(4,studentAddmissionDate);
+            pstmt.setString(4,studentAdmissionDate);
             pstmt.setInt(5,studentId);
+
             counterupdate=pstmt.executeUpdate();
             System.out.println("updated sucessfully");
             connection.close();
@@ -108,7 +109,6 @@ public class studentServices {
         }catch(Exception e){
             System.out.println(e);
         }
-
         return counterupdate;
     }
     public int DeleteStudent(int studentId){
@@ -183,7 +183,7 @@ public class studentServices {
                 pstmt.setString(2, models[i].getStudentName());
                 pstmt.setString(3, models[i].getDepartmentName());
                 pstmt.setString(4, models[i].getStudentMobileNo());
-                pstmt.setString(5, models[i].getStudentAddmissionDate());
+                pstmt.setString(5, models[i].getStudentAdmissionDate());
 
                 pstmt.addBatch();
             }

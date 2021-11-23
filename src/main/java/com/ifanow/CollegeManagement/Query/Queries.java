@@ -42,6 +42,7 @@ public class Queries {
     public static String deleteBatchAttendence="DELETE FROM `attendence`WHERE srNo=(?)";
 
     public static final String selectQueryLogin="select * from register";
+    public static final String selectQueryemail="select * from register where email=?";
     public static final String updateQueryLogin="update register set userName =?,password=? where userId=?";
     public static final String insertQueryRegister= "INSERT INTO register(userName,email,password) VALUES ((?),(?),(?))";
     public static final String deleteQueryLogin="delete from register where userId=?";

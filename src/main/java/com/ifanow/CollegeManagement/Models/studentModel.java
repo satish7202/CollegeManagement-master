@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 public class studentModel {
     int studentId;
     
-    String studentName,departmentName,studentMobileNo,studentAddmissionDate;
+    String studentName,departmentName,studentMobileNo,studentAdmissionDate;
 
-    public studentModel(int studentId, String studentName, String departmentName, String studentMobileNo, String studentAddmissionDate) {
+    public studentModel(int studentId, String studentName, String departmentName, String studentMobileNo, String studentAdmissionDate) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.departmentName = departmentName;
         this.studentMobileNo = studentMobileNo;
-        this.studentAddmissionDate = studentAddmissionDate;
+        this.studentAdmissionDate = studentAdmissionDate;
     }
     public studentModel(){
 
@@ -53,11 +53,11 @@ public class studentModel {
         this.studentMobileNo = studentMobileNo;
     }
 
-    public String getStudentAddmissionDate() {
-        return studentAddmissionDate;
+    public String getStudentAdmissionDate() {
+        return studentAdmissionDate;
     }
 
-    public void setStudentAddmissionDate(String studentAddmissionDate) {
-        this.studentAddmissionDate = studentAddmissionDate;
+    public void setStudentAdmissionDate(String studentAdmissionDate) {
+        this.studentAdmissionDate = studentAdmissionDate;
     }
 }

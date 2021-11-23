@@ -6,7 +6,7 @@ import com.ifanow.CollegeManagement.Services.LoginServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.ifanow.CollegeManagement.Models.checkLoginModel;
-
+import com.ifanow.CollegeManagement.Models.Register;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,18 +40,7 @@ public class LoginController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping(path = "/insertLogin", method = RequestMethod.POST)
-    @ResponseBody
-    public int LoginInsert(@RequestBody LoginModel loginModel) throws IOException {
-        System.out.println(loginModel);
-                String  usernameString=loginModel.getUserName();
-        String  emailstring=loginModel.getEmail();
-       String passwordstring = loginModel.getPassword();
-       int count = service.Insert(usernameString,emailstring,passwordstring);
-        return count;
-    }
-    @CrossOrigin(origins = "http://localhost:4200")
+   /* @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/updateLogin", method = RequestMethod.PUT)
     @ResponseBody
     public int updateDepartment(@RequestParam int userId,@RequestParam String userName,@RequestParam String password) throws IOException
@@ -70,7 +59,7 @@ public class LoginController {
         int userIdString = userId;
         int count = service.delete(userIdString);
         return count;
-    }
+    }*/
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(path = "/findregisteredUser")
     @ResponseBody
@@ -81,5 +70,21 @@ public class LoginController {
         String  find=service.finduser(emailstring,passwordString);
         Gson gson = new Gson();
         return gson.toJson(find);
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping(path = "/insertLogin", method = RequestMethod.POST)
+    @ResponseBody
+    public String  LoginInsert(@RequestBody String r) throws IOException {
+        System.out.println(r);
+        Gson gson=new Gson();
+        Register regi = gson.fromJson(r, Register.class);
+        String  usernameString=regi.getUserName();
+        String  emailstring=regi.getEmail();
+        String passwordstring = regi.getPassword();
+        int count = service.Insert(usernameString,emailstring,passwordstring);
+        return gson.toJson(String.valueOf(count));
+       // return count;
     }
 }

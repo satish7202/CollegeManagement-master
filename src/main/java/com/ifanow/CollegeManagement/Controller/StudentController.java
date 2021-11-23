@@ -53,29 +53,47 @@ public class StudentController {
         String studentName=studentmodel.getStudentName();
         String departmentName=studentmodel.getDepartmentName();
         String studentMobileNo=studentmodel.getStudentMobileNo();
-        String studentAddmissionDate=studentmodel.getStudentAddmissionDate();
+        String studentAdmissionDate=studentmodel.getStudentAdmissionDate();
 
-        String counter=gson.toJson(studentservices.InsertStudent(studentId,studentName,departmentName,studentMobileNo,studentAddmissionDate));
+        String counter=gson.toJson(studentservices.InsertStudent(studentId,studentName,departmentName,studentMobileNo,studentAdmissionDate));
         return counter;
     }
     @CrossOrigin(origins = "http://localhost:4200")
-   @PutMapping("/updateStudentDetails")
+    @PutMapping("/updateStudentDetails")
 
-   public String updateStudentdetails(@RequestBody String studentupdatedetails) {
-       int count = 0;
-       Gson gson=new Gson();
+    public String updateStudentdetails(@RequestBody String studentupdatedetails) {
+        int count = 0;
+        Gson gson=new Gson();
 
-       studentModel studentmodel=gson.fromJson(studentupdatedetails,studentModel.class);
-       int studentId=studentmodel.getStudentId();
-       String studentName=studentmodel.getStudentName();
-       String departmentName=studentmodel.getDepartmentName();
-       String studentMobileNo=studentmodel.getStudentMobileNo();
-       String studentAddmissionDate=studentmodel.getStudentAddmissionDate();
-       count=studentservices.UpdateStudent(studentId,studentName,departmentName,studentMobileNo,studentAddmissionDate);
+        studentModel studentmodel=gson.fromJson(studentupdatedetails,studentModel.class);
+        int studentId=studentmodel.getStudentId();
+        String studentName=studentmodel.getStudentName();
+        String departmentName=studentmodel.getDepartmentName();
+        String studentMobileNo=studentmodel.getStudentMobileNo();
+        String studentAdmissionDate=studentmodel.getStudentAdmissionDate();
+        count=studentservices.UpdateStudent(studentId,studentName,departmentName,studentMobileNo,studentAdmissionDate);
 
 
-       return  gson.toJson("Updated sucessfully.."+String.valueOf(count));
-   }
+        return  gson.toJson("Updated sucessfully.."+String.valueOf(count));
+    }
+//    @CrossOrigin(origins = "http://localhost:4200")
+//   @PutMapping("/updateStudentDetails")
+//
+//   public String updateStudentdetails(@RequestBody String studentupdatedetails) {
+//       int count = 0;
+//       Gson gson=new Gson();
+//
+//       studentModel studentmodel=gson.fromJson(studentupdatedetails,studentModel.class);
+//       int studentId=studentmodel.getStudentId();
+//       String studentName=studentmodel.getStudentName();
+//       String departmentName=studentmodel.getDepartmentName();
+//       String studentMobileNo=studentmodel.getStudentMobileNo();
+//       String studentAdmissionDate=studentmodel.getStudentAdmissionDate();
+//       count=studentservices.UpdateStudent(studentId,studentName,departmentName,studentMobileNo,studentAdmissionDate);
+//
+//
+//       return  gson.toJson("Updated sucessfully.."+String.valueOf(count));
+//   }
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/deleteStudentDetails",method = RequestMethod.DELETE)
     public int deleteStudent(@RequestParam int studentId) throws Exception{
